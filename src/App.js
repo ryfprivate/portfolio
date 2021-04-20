@@ -3,12 +3,22 @@ import Unity, { UnityContext } from "react-unity-webgl";
 
 import './App.css';
 
+// const unityContext = new UnityContext({
+//   loaderUrl: "Build/fireworks.loader.js",
+//   dataUrl: "Build/fireworks.data",
+//   frameworkUrl: "Build/fireworks.framework.js",
+//   codeUrl: "Build/fireworks.wasm",
+// });
 const unityContext = new UnityContext({
-  loaderUrl: "Build/fireworks.loader.js",
-  dataUrl: "Build/fireworks.data",
-  frameworkUrl: "Build/fireworks.framework.js",
-  codeUrl: "Build/fireworks.wasm",
+  loaderUrl: "Build/simple_bridge.loader.js",
+  dataUrl: "Build/simple_bridge.data",
+  frameworkUrl: "Build/simple_bridge.framework.js",
+  codeUrl: "Build/simple_bridge.wasm",
 });
+
+function test(amount) {
+  unityContext.send("AudioPeer", "PlayAudio");
+}
 
 function App() {
   return (
@@ -19,7 +29,7 @@ function App() {
         <Unity
           unityContext={unityContext}
           style={{
-            height: "80vh",
+            height: "100vh",
           }} />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -32,6 +42,7 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={() => test(100)} >Click</button>
       </header>
     </div>
   );
