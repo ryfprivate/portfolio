@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 
 import songFile from '../audio/Lady.mp3';
@@ -16,21 +16,49 @@ const unityContext = new UnityContext({
     codeUrl: "Build/simple_bridge.wasm",
 });
 
-const audio = new Audio(songFile);
-
-function TogglePlay() {
-    if (audio.paused) {
-        audio.play();
-    } else {
-        audio.pause();
-    }
-}
-
-function test(amount) {
-    unityContext.send("AudioPeer", "PlayAudio");
-}
+// function test(amount) {
+//     unityContext.send("AudioPeer", "PlayAudio");
+// }
 
 function AudioVisualiser() {
+
+    const audioRef = useRef(null);
+
+    useEffect(() => {
+        createVisualization();
+    })
+
+    const createVisualization = () => {
+        let context = new AudioContext();
+        context.resume();
+        let analyser = context.createAnalyser();
+        audioRef.current.crossOrigin = "anonymous";
+        let audioSrc;
+        if (audioSrc === undefined) {
+            audioSrc = context.createMediaElementSource(audioRef.current);
+        }
+        audioSrc.connect(analyser);
+        audioSrc.connect(context.destination);
+        analyser.connect(context.destination);
+        analyser.fftSize = 1024;
+
+        function renderFrame() {
+            let freqData = new Uint8Array(analyser.frequencyBinCount)
+            requestAnimationFrame(renderFrame)
+            analyser.getByteFrequencyData(freqData)
+            console.log(freqData)
+        };
+        renderFrame()
+    }
+
+    const togglePlay = () => {
+        if (audioRef.current.paused) {
+            audioRef.current.play();
+        } else {
+            audioRef.current.pause();
+        }
+    }
+
     return (
         <div>
             <Unity
@@ -38,7 +66,14 @@ function AudioVisualiser() {
                 style={{
                     height: "100vh",
                 }} />
-            <button onClick={() => TogglePlay()} >Click</button>
+            <audio
+                ref={audioRef}
+                autoPlay={true}
+                controls={true}
+                src={songFile}
+            >
+            </audio>
+            <button onClick={() => togglePlay()} >Click</button>
         </div>
     );
 }
