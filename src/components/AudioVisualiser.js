@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 
 import songFile from '../audio/Lady.mp3';
@@ -16,11 +16,8 @@ const unityContext = new UnityContext({
     codeUrl: "Build/simple_bridge.wasm",
 });
 
-// function test(amount) {
-//     unityContext.send("AudioPeer", "PlayAudio");
-// }
-
 function AudioVisualiser() {
+    // const [freqString, setFreqString] = useState("");
 
     const audioRef = useRef(null);
 
@@ -43,12 +40,16 @@ function AudioVisualiser() {
         analyser.fftSize = 1024;
 
         function renderFrame() {
-            let freqData = new Uint8Array(analyser.frequencyBinCount)
-            requestAnimationFrame(renderFrame)
-            analyser.getByteFrequencyData(freqData)
-            console.log(freqData)
+            let freqData = new Uint8Array(analyser.frequencyBinCount);
+
+
+            requestAnimationFrame(renderFrame);
+            analyser.getByteFrequencyData(freqData);
+
+            let freqString = freqData.toString();
+            unityContext.send("AudioPeer", "SetFrequencySamples", freqString);
         };
-        renderFrame()
+        renderFrame();
     }
 
     const togglePlay = () => {
@@ -57,6 +58,10 @@ function AudioVisualiser() {
         } else {
             audioRef.current.pause();
         }
+    }
+
+    const sendString = () => {
+        unityContext.send("AudioPeer", "SetFrequencySamples", "Hello");
     }
 
     return (
@@ -73,7 +78,7 @@ function AudioVisualiser() {
                 src={songFile}
             >
             </audio>
-            <button onClick={() => togglePlay()} >Click</button>
+            <button onClick={() => sendString()} >Click</button>
         </div>
     );
 }
