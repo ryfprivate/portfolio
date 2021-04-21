@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 
-import songFile from '../audio/Lady.mp3';
+import ladyMp3 from '../audio/Lady.mp3';
+import pumpedMp3 from '../audio/Pumped.mp3';
 
 // const unityContext = new UnityContext({
 //   loaderUrl: "Build/fireworks.loader.js",
@@ -23,13 +24,13 @@ function AudioVisualiser() {
 
     useEffect(() => {
         createVisualization();
+        audioRef.current.volume = 0.1;
     })
 
     const createVisualization = () => {
         let context = new AudioContext();
         context.resume();
         let analyser = context.createAnalyser();
-        audioRef.current.crossOrigin = "anonymous";
         let audioSrc;
         if (audioSrc === undefined) {
             audioSrc = context.createMediaElementSource(audioRef.current);
@@ -60,6 +61,10 @@ function AudioVisualiser() {
         }
     }
 
+    const changeSong = () => {
+        audioRef.current.src = pumpedMp3;
+    }
+
     const sendString = () => {
         unityContext.send("AudioPeer", "SetFrequencySamples", "Hello");
     }
@@ -73,12 +78,14 @@ function AudioVisualiser() {
                 }} />
             <audio
                 ref={audioRef}
+                crossOrigin="anonymous"
+                preload="auto"
                 autoPlay={true}
                 controls={true}
-                src={songFile}
+                src={ladyMp3}
             >
             </audio>
-            <button onClick={() => sendString()} >Click</button>
+            <button onClick={() => changeSong()} >Click</button>
         </div>
     );
 }
