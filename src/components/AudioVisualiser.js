@@ -48,7 +48,7 @@ function AudioVisualiser() {
             analyser.getByteFrequencyData(freqData);
 
             let freqString = freqData.toString();
-            unityContext.send("AudioPeer", "SetFrequencySamples", freqString);
+            unityContext.send("Game", "SetFrequencySamples", freqString);
         };
         renderFrame();
     }
@@ -75,6 +75,7 @@ function AudioVisualiser() {
                 unityContext={unityContext}
                 style={{
                     height: "100vh",
+                    width: "100vw"
                 }} />
             <audio
                 ref={audioRef}
