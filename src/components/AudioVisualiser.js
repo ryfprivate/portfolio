@@ -50,13 +50,11 @@ export default function AudioVisualiser(props) {
     }
 
     return (
-        <div>
-            <Unity
-                unityContext={unityContext}
-                style={{
-                    height: "100vh",
-                    width: "100vw"
-                }} />
-        </div>
+        <Unity
+            unityContext={unityContext}
+            style={{
+                height: "100vh",
+                width: "100%"
+            }} />
     );
 }

@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
+    navContent: {
+        width: '80%',
+        justifyContent: 'center',
+    },
     appBar: {
         backgroundColor: 'rgba(201, 76, 76, 0.3)',
         transition: theme.transitions.create(['margin', 'width'], {
@@ -90,7 +94,7 @@ export default function NavBar(props) {
                     <Typography variant="h6" noWrap>
                         Audio Visualizer
                     </Typography>
-                    <div>{props.children}</div>
+                    <div style={{ width: '80%', justifyContent: 'center', alignItems: 'center' }} >{props.children}</div>
                 </Toolbar>
             </AppBar>
             <Drawer
