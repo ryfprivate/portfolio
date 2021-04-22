@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 
-import ladyMp3 from '../audio/Lady.mp3';
+
 import pumpedMp3 from '../audio/Pumped.mp3';
 
 // const unityContext = new UnityContext({
@@ -17,14 +17,10 @@ const unityContext = new UnityContext({
     codeUrl: "Build/simple_bridge.wasm",
 });
 
-function AudioVisualiser() {
-    // const [freqString, setFreqString] = useState("");
-
-    const audioRef = useRef(null);
-
+export default function AudioVisualiser(props) {
     useEffect(() => {
         createVisualization();
-        audioRef.current.volume = 0.1;
+        props.audioRef.current.volume = 0.1;
     })
 
     const createVisualization = () => {
@@ -33,7 +29,7 @@ function AudioVisualiser() {
         let analyser = context.createAnalyser();
         let audioSrc;
         if (audioSrc === undefined) {
-            audioSrc = context.createMediaElementSource(audioRef.current);
+            audioSrc = context.createMediaElementSource(props.audioRef.current);
         }
         audioSrc.connect(analyser);
         audioSrc.connect(context.destination);
@@ -53,22 +49,6 @@ function AudioVisualiser() {
         renderFrame();
     }
 
-    const togglePlay = () => {
-        if (audioRef.current.paused) {
-            audioRef.current.play();
-        } else {
-            audioRef.current.pause();
-        }
-    }
-
-    const changeSong = () => {
-        audioRef.current.src = pumpedMp3;
-    }
-
-    const sendString = () => {
-        unityContext.send("AudioPeer", "SetFrequencySamples", "Hello");
-    }
-
     return (
         <div>
             <Unity
@@ -77,18 +57,6 @@ function AudioVisualiser() {
                     height: "100vh",
                     width: "100vw"
                 }} />
-            <audio
-                ref={audioRef}
-                crossOrigin="anonymous"
-                preload="auto"
-                autoPlay={true}
-                controls={true}
-                src={ladyMp3}
-            >
-            </audio>
-            <button onClick={() => changeSong()} >Click</button>
         </div>
     );
 }
-
-export default AudioVisualiser;
