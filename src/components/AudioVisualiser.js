@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const unityContext = new UnityContext({
     loaderUrl: "Build/simple_bridge.loader.js",
@@ -7,30 +8,56 @@ const unityContext = new UnityContext({
     frameworkUrl: "Build/simple_bridge.framework.js",
     codeUrl: "Build/simple_bridge.wasm",
 });
-// const unityContext = new UnityContext({
-//     loaderUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.loader.js",
-//     dataUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.data",
-//     frameworkUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.framework.js",
-//     codeUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.wasm",
-// });
+
 
 export default function AudioVisualiser(props) {
+    const [loaded, setLoaded] = useState(false);
+    const [progression, setProgression] = useState(0);
+
+
+    unityContext.on("progress", (val) => {
+        console.log(val);
+        setProgression(val);
+    });
+
+    unityContext.on("loaded", () => {
+        setLoaded(true);
+    });
+
+
+
     useEffect(() => {
-        let context = new AudioContext();
-        context.resume();
-        createVisualization(context);
+        let context, analyser, audioSrc;
+        context = new (window.AudioContext ||
+            window.webkitAudioContext)();
+        createVisualization(context, analyser, audioSrc);
         props.audioRef.current.volume = 0.1;
+
+        const timer = setInterval(() => {
+            setProgression((oldProgress) => {
+                if (oldProgress === 100) {
+                    return 0;
+                }
+                const diff = Math.random() * 10;
+                return Math.min(oldProgress + diff, 100);
+            });
+        }, 500);
+
+        return () => {
+            clearInterval(timer);
+        };
     })
 
-    const createVisualization = (context) => {
-        let analyser = context.createAnalyser();
-        let audioSrc;
-        if (audioSrc === undefined) {
+    const createVisualization = (context, analyser, audioSrc) => {
+        analyser = context.createAnalyser();
+        console.log("audiosrc" + audioSrc + "context " + context + " audioref " + props.audioRef.current);
+        if (audioSrc === undefined && props.audioRef.current == null) {
             audioSrc = context.createMediaElementSource(props.audioRef.current);
+            audioSrc.connect(analyser);
+            audioSrc.connect(context.destination);
+            analyser.connect(context.destination);
         }
-        audioSrc.connect(analyser);
-        audioSrc.connect(context.destination);
-        analyser.connect(context.destination);
+
         analyser.fftSize = 1024;
 
         function renderFrame() {
@@ -47,11 +74,20 @@ export default function AudioVisualiser(props) {
     }
 
     return (
-        <Unity
-            unityContext={unityContext}
-            style={{
-                height: "100vh",
-                width: "100%"
-            }} />
+        <div>
+            {loaded ?
+                "" :
+                <LinearProgress
+                    style={{ position: "fixed", marginTop: "25%", height: "10px", width: "100%" }}
+                    variant="determinate"
+                    value={progression}
+                />}
+            <Unity
+                unityContext={unityContext}
+                style={{
+                    height: "100vh",
+                    width: "100vw"
+                }} />
+        </div>
     );
 }
