@@ -1,31 +1,28 @@
 import React, { useEffect } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 
-
-import pumpedMp3 from '../audio/Pumped.mp3';
-
-// const unityContext = new UnityContext({
-//   loaderUrl: "Build/fireworks.loader.js",
-//   dataUrl: "Build/fireworks.data",
-//   frameworkUrl: "Build/fireworks.framework.js",
-//   codeUrl: "Build/fireworks.wasm",
-// });
 const unityContext = new UnityContext({
     loaderUrl: "Build/simple_bridge.loader.js",
     dataUrl: "Build/simple_bridge.data",
     frameworkUrl: "Build/simple_bridge.framework.js",
     codeUrl: "Build/simple_bridge.wasm",
 });
+// const unityContext = new UnityContext({
+//     loaderUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.loader.js",
+//     dataUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.data",
+//     frameworkUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.framework.js",
+//     codeUrl: "https://ryfprivate.github.io/audio_visualiser/Build/simple_bridge.wasm",
+// });
 
 export default function AudioVisualiser(props) {
     useEffect(() => {
-        createVisualization();
+        let context = new AudioContext();
+        context.resume();
+        createVisualization(context);
         props.audioRef.current.volume = 0.1;
     })
 
-    const createVisualization = () => {
-        let context = new AudioContext();
-        context.resume();
+    const createVisualization = (context) => {
         let analyser = context.createAnalyser();
         let audioSrc;
         if (audioSrc === undefined) {
