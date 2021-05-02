@@ -10,7 +10,7 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 
 import Slider from '@material-ui/core/Slider';
 
-import ladyMp3 from '../audio/Lady.mp3';
+import tracks from '../tracks';
 
 const useStyles = makeStyles({
     root: {
@@ -70,10 +70,14 @@ const useStyles = makeStyles({
 export default function AudioPlayer() {
     const classes = useStyles();
     const [volume, setVolume] = useState(10);
+    const [trackIndex, setTrackIndex] = useState(0);
     const [trackProgress, setTrackProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    // Tracks
+    const { title, artist, audioSrc } = tracks[trackIndex];
+
     // Refs
-    const audioRef = useRef(new Audio(ladyMp3));
+    const audioRef = useRef(new Audio(audioSrc));
     const intervalRef = useRef();
 
     // Ref values
