@@ -14,7 +14,6 @@ export default function AudioVisualiser(props) {
     const [loaded, setLoaded] = useState(false);
     const [progression, setProgression] = useState(0);
 
-
     unityContext.on("progress", (val) => {
         console.log(val);
         setProgression(val);
@@ -24,54 +23,51 @@ export default function AudioVisualiser(props) {
         setLoaded(true);
     });
 
+    // useEffect(() => {
+    //     createVisualization();
+
+    //     const timer = setInterval(() => {
+    //         setProgression((oldProgress) => {
+    //             if (oldProgress === 100) {
+    //                 return 0;
+    //             }
+    //             const diff = Math.random() * 10;
+    //             return Math.min(oldProgress + diff, 100);
+    //         });
+    //     }, 500);
+
+    //     return () => {
+    //         clearInterval(timer);
+    //     };
+    // })
+
+    // const createVisualization = () => {
+    //     let context, analyser, audioSrc;
+    //     context = new (window.AudioContext ||
+    //         window.webkitAudioContext)();
+    //     analyser = context.createAnalyser();
+    //     console.log("audiosrc" + audioSrc);
+    //     if (audioSrc === undefined) {
+    //         audioSrc = context.createMediaElementSource(props.audioRef.current);
+    //     }
+    //     audioSrc.connect(analyser);
+    //     audioSrc.connect(context.destination);
+    //     analyser.connect(context.destination);
+
+    //     analyser.fftSize = 1024;
+
+    //     function renderFrame() {
+    //         let freqData = new Uint8Array(analyser.frequencyBinCount);
 
 
-    useEffect(() => {
-        let context, analyser, audioSrc;
-        context = new (window.AudioContext ||
-            window.webkitAudioContext)();
-        createVisualization(context, analyser, audioSrc);
-        props.audioRef.current.volume = 0.1;
+    //         requestAnimationFrame(renderFrame);
+    //         analyser.getByteFrequencyData(freqData);
 
-        const timer = setInterval(() => {
-            setProgression((oldProgress) => {
-                if (oldProgress === 100) {
-                    return 0;
-                }
-                const diff = Math.random() * 10;
-                return Math.min(oldProgress + diff, 100);
-            });
-        }, 500);
-
-        return () => {
-            clearInterval(timer);
-        };
-    })
-
-    const createVisualization = (context, analyser, audioSrc) => {
-        analyser = context.createAnalyser();
-        console.log("audiosrc" + audioSrc + "context " + context + " audioref " + props.audioRef.current);
-        if (audioSrc === undefined && props.audioRef.current == null) {
-            audioSrc = context.createMediaElementSource(props.audioRef.current);
-            audioSrc.connect(analyser);
-            audioSrc.connect(context.destination);
-            analyser.connect(context.destination);
-        }
-
-        analyser.fftSize = 1024;
-
-        function renderFrame() {
-            let freqData = new Uint8Array(analyser.frequencyBinCount);
-
-
-            requestAnimationFrame(renderFrame);
-            analyser.getByteFrequencyData(freqData);
-
-            let freqString = freqData.toString();
-            unityContext.send("Game", "SetFrequencySamples", freqString);
-        };
-        renderFrame();
-    }
+    //         let freqString = freqData.toString();
+    //         unityContext.send("Game", "SetFrequencySamples", freqString);
+    //     };
+    //     renderFrame();
+    // }
 
     return (
         <div>
