@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 import LinearProgress from '@material-ui/core/LinearProgress';
 

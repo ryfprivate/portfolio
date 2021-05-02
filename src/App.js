@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import NavBar from "./components/NavBar";
 import AudioPlayer from "./components/AudioPlayer";
 
