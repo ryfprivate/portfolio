@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
-import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const unityContext = new UnityContext({
     loaderUrl: "Build/simple_bridge.loader.js",
@@ -12,12 +12,6 @@ const unityContext = new UnityContext({
 
 export default function AudioVisualiser(props) {
     const [loaded, setLoaded] = useState(false);
-    const [progression, setProgression] = useState(0);
-
-    unityContext.on("progress", (val) => {
-        console.log(val);
-        setProgression(val);
-    });
 
     unityContext.on("loaded", () => {
         setLoaded(true);
@@ -73,10 +67,8 @@ export default function AudioVisualiser(props) {
         <div>
             {loaded ?
                 "" :
-                <LinearProgress
-                    style={{ position: "fixed", marginTop: "25%", height: "10px", width: "100%" }}
-                    variant="determinate"
-                    value={progression}
+                <CircularProgress
+                    style={{ position: "fixed", marginTop: "25%", marginLeft: "50%" }}
                 />}
             <Unity
                 unityContext={unityContext}
