@@ -5,6 +5,7 @@ import AudioVisualiser from "./AudioVisualiser";
 import IconButton from '@material-ui/core/IconButton';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 
@@ -111,6 +112,7 @@ export default function AudioPlayer() {
 
     useEffect(() => {
         if (isPlaying) {
+            audioRef.current.volume = volume / parseFloat(100);
             audioRef.current.play();
             startTimer();
         } else {
@@ -118,9 +120,8 @@ export default function AudioPlayer() {
         }
     }, [isPlaying]);
 
-    const play = () => {
-        audioRef.current.volume = volume / parseFloat(100);
-        setIsPlaying(true);
+    const togglePlay = () => {
+        setIsPlaying(!isPlaying);
     }
 
     return (
@@ -140,8 +141,10 @@ export default function AudioPlayer() {
                         <IconButton className={classes.button}>
                             <SkipPreviousIcon />
                         </IconButton>
-                        <IconButton onClick={play} className={classes.button}>
-                            <PlayArrowIcon />
+                        <IconButton onClick={togglePlay} className={classes.button}>
+                            {isPlaying ?
+                                <PauseIcon /> :
+                                <PlayArrowIcon />}
                         </IconButton>
                         <IconButton className={classes.button}>
                             <SkipNextIcon />
