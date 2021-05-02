@@ -7,6 +7,7 @@ const tracks = [
         title: "Lady",
         artist: "Modjo",
         audioSrc: lady,
+        imgSrc: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Lady-modjo.jpg/220px-Lady-modjo.jpg"
     },
     {
         title: "Permanent",

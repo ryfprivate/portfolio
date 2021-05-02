@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     root: {
         position: 'fixed',
         bottom: '0',
-        height: '7vh',
+        height: '10vh',
         width: '100vw',
 
         display: 'flex',
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
 
-        backgroundColor: 'black',
+        backgroundColor: 'rgba(201, 76, 76, 0.3)',
         opacity: '0.7',
     },
     slider: {
@@ -36,9 +36,10 @@ const useStyles = makeStyles({
         width: '95%',
     },
     audio: {
-        height: '4vh',
+        height: '7vh',
         width: '100vw',
         display: 'flex',
+        alignItems: 'center',
         flexDirection: 'row',
     },
     audio_section: {
@@ -53,14 +54,19 @@ const useStyles = makeStyles({
     audio_middle: {
         flexGrow: '3',
         justifyContent: 'center',
+        fontSize: '15px',
     },
     audio_right: {
         flexGrow: '1',
         justifyContent: 'flex-end',
         marginRight: '40px'
     },
+    desc: {
+        marginLeft: '20px'
+    },
     volume: {
-        color: 'white'
+        color: 'white',
+        width: '100px'
     },
     button: {
         color: 'white'
@@ -74,7 +80,7 @@ export default function AudioPlayer() {
     const [trackProgress, setTrackProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     // Tracks
-    const { title, artist, audioSrc } = tracks[trackIndex];
+    const { title, artist, audioSrc, imgSrc } = tracks[trackIndex];
 
     // Refs
     const audioRef = useRef(new Audio(audioSrc));
@@ -142,7 +148,13 @@ export default function AudioPlayer() {
                         </IconButton>
                     </div>
                     <div className={`${classes.audio_section} ${classes.audio_middle}`}>
-                        Middle
+                        <img src={imgSrc}
+                            alt="Song cover" width="50" height="50"
+                        />
+                        <div className={classes.desc} >
+                            <div><strong>{title}</strong></div>
+                            <div>{artist}</div>
+                        </div>
                     </div>
                     <div className={`${classes.audio_section} ${classes.audio_right}`}>
                         <IconButton className={classes.button}>
