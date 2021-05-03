@@ -88,6 +88,9 @@ export default function AudioPlayer() {
     const { title, artist, audioSrc, imgSrc } = tracks[trackIndex];
 
     // Refs
+    const audioContext = useRef(null);
+    const mediaSource = useRef(null);
+    const analyser = useRef(null);
     const audioRef = useRef(new Audio(audioSrc));
     const intervalRef = useRef();
 
@@ -98,6 +101,31 @@ export default function AudioPlayer() {
     const handleVolumeChange = (event, newValue) => {
         setVolume(newValue);
         audioRef.current.volume = volume / parseFloat(100);
+    }
+
+    const togglePlay = () => {
+        setIsPlaying(!isPlaying);
+
+        if (!started) {
+            setStarted(true);
+            initializeAudioAnalyser();
+        }
+    }
+
+    const toPrevTrack = () => {
+        if (trackIndex - 1 < 0) {
+            setTrackIndex(tracks.length - 1);
+        } else {
+            setTrackIndex(trackIndex - 1);
+        }
+    }
+
+    const toNextTrack = () => {
+        if (trackIndex < tracks.length - 1) {
+            setTrackIndex(trackIndex + 1);
+        } else {
+            setTrackIndex(0);
+        }
     }
 
     const startTimer = () => {
@@ -115,13 +143,18 @@ export default function AudioPlayer() {
     };
 
     const initializeAudioAnalyser = () => {
-        const audioContext = new AudioContext();
-        const source = audioContext.createMediaElementSource(audioRef.current);
-        const analyser = audioContext.createAnalyser();
-        analyser.fftSize = 1024;
-        source.connect(audioContext.destination);
-        source.connect(analyser);
-        setAudioData(analyser);
+        audioContext.current = audioContext.current || new AudioContext();
+        mediaSource.current = audioContext.current.createMediaElementSource(audioRef.current);
+        analyser.current = audioContext.current.createAnalyser();
+        analyser.current.fftSize = 1024;
+        mediaSource.current.connect(audioContext.current.destination);
+        mediaSource.current.connect(analyser.current);
+        setAudioData(analyser.current);
+    }
+
+    const disconnectAudioAnalyser = () => {
+        mediaSource.current.disconnect(audioContext.current.destination);
+        mediaSource.current.disconnect(analyser.current);
     }
 
     const runSpectrum = useCallback(() => {
@@ -136,6 +169,7 @@ export default function AudioPlayer() {
         [audioData]
     );
 
+    // Effects
     useEffect(() => {
         requestAnimationFrame(runSpectrum);
     }, [audioData, runSpectrum]);
@@ -150,14 +184,17 @@ export default function AudioPlayer() {
         }
     }, [isPlaying, volume]);
 
-    const togglePlay = () => {
-        setIsPlaying(!isPlaying);
+    useEffect(() => {
+        if (audioContext.current == null) return;
+        audioRef.current.pause();
+        audioRef.current = new Audio(audioSrc);
+        disconnectAudioAnalyser();
+        initializeAudioAnalyser();
 
-        if (!started) {
-            setStarted(true);
-            initializeAudioAnalyser();
-        }
-    }
+        audioRef.current.volume = volume / parseFloat(100);
+        audioRef.current.play();
+        startTimer();
+    }, [trackIndex, audioSrc, volume]);
 
     return (
         <div>
@@ -173,7 +210,7 @@ export default function AudioPlayer() {
                 </div>
                 <div className={classes.audio}>
                     <div className={`${classes.audio_section} ${classes.audio_left}`}>
-                        <IconButton className={classes.button}>
+                        <IconButton onClick={toPrevTrack} className={classes.button}>
                             <SkipPreviousIcon />
                         </IconButton>
                         <IconButton onClick={togglePlay} className={classes.button}>
@@ -181,7 +218,7 @@ export default function AudioPlayer() {
                                 <PauseIcon /> :
                                 <PlayArrowIcon />}
                         </IconButton>
-                        <IconButton className={classes.button}>
+                        <IconButton onClick={toNextTrack} className={classes.button}>
                             <SkipNextIcon />
                         </IconButton>
                     </div>
