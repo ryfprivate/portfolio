@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -10,12 +10,17 @@ const unityContext = new UnityContext({
 });
 
 
-export default function AudioVisualiser(props) {
+export default function AudioVisualiser({ samples }) {
     const [loaded, setLoaded] = useState(false);
 
     unityContext.on("loaded", () => {
         setLoaded(true);
     });
+
+    useEffect(() => {
+        let freqString = samples.toString();
+        unityContext.send("Game", "SetFrequencySamples", freqString);
+    }, [samples]);
 
     // useEffect(() => {
     //     createVisualization();

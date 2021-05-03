@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AudioVisualiser from "./AudioVisualiser";
 
@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     audio_middle: {
         flexGrow: '3',
         justifyContent: 'center',
-        fontSize: '15px',
+        fontSize: '18px',
     },
     audio_right: {
         flexGrow: '1',
@@ -80,6 +80,8 @@ export default function AudioPlayer() {
     const [trackIndex, setTrackIndex] = useState(0);
     const [trackProgress, setTrackProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [audioData, setAudioData] = useState(null);
+    const [samples, setSamples] = useState([]);
     // Tracks
     const { title, artist, audioSrc, imgSrc } = tracks[trackIndex];
 
@@ -107,8 +109,34 @@ export default function AudioPlayer() {
             } else {
                 setTrackProgress(audioRef.current.currentTime);
             }
-        }, [1000]);
+        }, [500]);
     };
+
+    const initializeAudioAnalyser = () => {
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaElementSource(audioRef.current);
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = 1024;
+        source.connect(audioContext.destination);
+        source.connect(analyser);
+        setAudioData(analyser);
+    }
+
+    const runSpectrum = useCallback(() => {
+        if (audioData != null) {
+            const bufferLength = audioData.frequencyBinCount;
+            const amplitudeArray = new Uint8Array(bufferLength);
+            audioData.getByteFrequencyData(amplitudeArray);
+            setSamples(amplitudeArray);
+        }
+        requestAnimationFrame(runSpectrum);
+    },
+        [audioData]
+    );
+
+    useEffect(() => {
+        requestAnimationFrame(runSpectrum);
+    }, [audioData, runSpectrum]);
 
     useEffect(() => {
         if (isPlaying) {
@@ -118,7 +146,11 @@ export default function AudioPlayer() {
         } else {
             audioRef.current.pause();
         }
-    }, [isPlaying]);
+    }, [isPlaying, volume]);
+
+    const start = () => {
+        initializeAudioAnalyser();
+    }
 
     const togglePlay = () => {
         setIsPlaying(!isPlaying);
@@ -126,7 +158,7 @@ export default function AudioPlayer() {
 
     return (
         <div>
-            <AudioVisualiser />
+            <AudioVisualiser samples={samples} />
             <div className={classes.root}>
                 <div className={classes.slider}>
                     <Slider
@@ -146,7 +178,7 @@ export default function AudioPlayer() {
                                 <PauseIcon /> :
                                 <PlayArrowIcon />}
                         </IconButton>
-                        <IconButton className={classes.button}>
+                        <IconButton onClick={start} className={classes.button}>
                             <SkipNextIcon />
                         </IconButton>
                     </div>
