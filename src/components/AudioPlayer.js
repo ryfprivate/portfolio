@@ -82,6 +82,8 @@ export default function AudioPlayer() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [audioData, setAudioData] = useState(null);
     const [samples, setSamples] = useState([]);
+    // Singleton variable (to ensure initializeAudioAnaylser only calls once)
+    const [started, setStarted] = useState(false);
     // Tracks
     const { title, artist, audioSrc, imgSrc } = tracks[trackIndex];
 
@@ -148,12 +150,13 @@ export default function AudioPlayer() {
         }
     }, [isPlaying, volume]);
 
-    const start = () => {
-        initializeAudioAnalyser();
-    }
-
     const togglePlay = () => {
         setIsPlaying(!isPlaying);
+
+        if (!started) {
+            setStarted(true);
+            initializeAudioAnalyser();
+        }
     }
 
     return (
@@ -178,7 +181,7 @@ export default function AudioPlayer() {
                                 <PauseIcon /> :
                                 <PlayArrowIcon />}
                         </IconButton>
-                        <IconButton onClick={start} className={classes.button}>
+                        <IconButton className={classes.button}>
                             <SkipNextIcon />
                         </IconButton>
                     </div>
