@@ -11,13 +11,15 @@ const tracks = [
     },
     {
         title: "Permanent",
-        artist: "Modjo",
+        artist: "Spag Heddy",
         audioSrc: permanent,
+        imgSrc: "https://i1.sndcdn.com/artworks-000227842473-2lz29i-t500x500.jpg"
     },
     {
-        title: "Pumped up kicks",
-        artist: "Modjo",
+        title: "Pumped up Kicks",
+        artist: "Foster The People",
         audioSrc: pumped,
+        imgSrc: "https://i1.sndcdn.com/artworks-7OzaunxRWGKtRzna-ussynQ-t500x500.jpg"
     },
 ];
 

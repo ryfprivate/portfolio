@@ -182,7 +182,7 @@ export default function AudioPlayer() {
         } else {
             audioRef.current.pause();
         }
-    }, [isPlaying, volume]);
+    }, [isPlaying]);
 
     useEffect(() => {
         if (audioContext.current == null) return;
@@ -194,7 +194,7 @@ export default function AudioPlayer() {
         audioRef.current.volume = volume / parseFloat(100);
         audioRef.current.play();
         startTimer();
-    }, [trackIndex, audioSrc, volume]);
+    }, [trackIndex, audioSrc]);
 
     return (
         <div>
