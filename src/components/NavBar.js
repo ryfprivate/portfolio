@@ -17,9 +17,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import AboutModal from './AboutModal';
 
-import logo from '../images/rayf_short.png';
+import logo from '../images/rf_logo.png';
 
-const drawerWidth = 240;
+const drawerWidth = 150;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     logo: {
-        width: '100px',
-        height: '20px',
+        width: '50px',
+        height: '50px',
         marginBottom: '5px'
     },
     hide: {
@@ -66,11 +66,6 @@ const useStyles = makeStyles((theme) => ({
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
-    },
-    drawerHeader: {
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     drawerPaper: {
         alignItems: 'center',

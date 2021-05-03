@@ -1,6 +1,6 @@
 import lady from './audio/Lady.mp3';
-import permanent from './audio/Permanent.mp3';
-import pumped from './audio/Pumped.mp3';
+import beautiful from './audio/Beautiful.mp3';
+import licht from './audio/Licht.mp3';
 
 const tracks = [
     {
@@ -10,16 +10,16 @@ const tracks = [
         imgSrc: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Lady-modjo.jpg/220px-Lady-modjo.jpg"
     },
     {
-        title: "Permanent",
-        artist: "Spag Heddy",
-        audioSrc: permanent,
-        imgSrc: "https://i1.sndcdn.com/artworks-000227842473-2lz29i-t500x500.jpg"
+        title: "Licht und Schatten",
+        artist: "Yutaka Yamada",
+        audioSrc: licht,
+        imgSrc: "https://ae01.alicdn.com/kf/HTB1imj8NVXXXXXJXFXXq6xXFXXX5/Tokyo-Ghoul-Anime-Kaneki-Ken-Single-side-Mini-Square-Pillow-39348.jpg_Q90.jpg_.webp"
     },
     {
-        title: "Pumped up Kicks",
-        artist: "Foster The People",
-        audioSrc: pumped,
-        imgSrc: "https://i1.sndcdn.com/artworks-7OzaunxRWGKtRzna-ussynQ-t500x500.jpg"
+        title: "So Beautiful",
+        artist: "DPR Ian",
+        audioSrc: beautiful,
+        imgSrc: "https://lab.fm/wp-content/uploads/2021/03/032321-dpr-ian-scaredy-cat-youtube.jpg"
     },
 ];
 

@@ -63,7 +63,8 @@ const useStyles = makeStyles({
         marginRight: '40px'
     },
     desc: {
-        marginLeft: '20px'
+        marginLeft: '20px',
+        textAlign: 'left',
     },
     volume: {
         color: 'white',
