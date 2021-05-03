@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,10 +13,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+
+import AboutModal from './AboutModal';
+
+import logo from '../images/rayf_short.png';
 
 const drawerWidth = 240;
 
@@ -43,18 +44,39 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
+    toolbar: {
+        display: 'flex',
+        width: '100%'
+    },
+    toolbarItem: {
+        display: 'flex',
+        justifyContent: 'flex-start'
+    },
     menuButton: {
         marginRight: theme.spacing(2),
     },
+    logo: {
+        width: '100px',
+        height: '20px',
+        marginBottom: '5px'
+    },
     hide: {
-        display: 'none',
+        visibility: 'hidden',
     },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
     },
+    drawerHeader: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     drawerPaper: {
+        alignItems: 'center',
+        backgroundColor: 'rgba(201, 76, 76, 0.3)',
         width: drawerWidth,
+        color: 'white'
     },
 
 }));
@@ -62,14 +84,20 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+    const handleModalOpen = () => {
+        setModalOpen(true);
+    };
+    const handleModalClose = () => {
+        setModalOpen(false);
     };
 
     return (
@@ -81,20 +109,26 @@ export default function NavBar(props) {
                     [classes.appBarShift]: open,
                 })}
             >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, open && classes.hide)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Audio Visualizer
+                <Toolbar className={classes.toolbar}>
+                    <div className={classes.toolbarItem}>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, open && classes.hide)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <IconButton >
+                            <img className={classes.logo} alt='logo' src={logo} />
+                        </IconButton>
+                    </div>
+                    <div style={{ marginLeft: '25px' }} className={classes.toolbarItem}>
+                        <Typography variant="h6" noWrap>
+                            Home: Audio Visualizer
                     </Typography>
-                    <div style={{ width: '80%', justifyContent: 'center', alignItems: 'center' }} >{props.children}</div>
+                    </div>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -107,29 +141,19 @@ export default function NavBar(props) {
                 }}
             >
                 <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton style={{ color: 'white' }} onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
                 </div>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                    <ListItem button onClick={handleModalOpen} >
+                        <ListItemText primary='About' />
+                    </ListItem>
                 </List>
                 <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-                </List>
             </Drawer>
+            <AboutModal open={modalOpen} onClose={handleModalClose} />
         </div>
     );
 }
