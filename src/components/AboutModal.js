@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from '@react-spring/web';
+import 'simplebar';
+import 'simplebar/dist/simplebar.css';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -13,14 +15,13 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        textAlign: 'center',
         backgroundColor: 'rgba(23, 23, 23, 0.5)',
         color: 'white',
         height: '50vh',
         width: '50vw',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
-        overflow: 'scroll',
         overflowX: 'hidden',
     },
 }));
@@ -62,9 +63,26 @@ export default function AboutModal({ open, onClose }) {
                 timeout: 500,
             }}
         >
+
             <Fade in={open}>
-                <div className={classes.paper}>
+                <div className={classes.paper} data-simplebar >
                     <h2>About Me</h2>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
+                    <p>WAsssuppp</p>
                     <p>WAsssuppp</p>
                     <p>WAsssuppp</p>
                     <p>WAsssuppp</p>
@@ -78,5 +96,6 @@ export default function AboutModal({ open, onClose }) {
                     <p>WAsssuppp</p>
                 </div>
             </Fade>
+
         </Modal>)
 };
