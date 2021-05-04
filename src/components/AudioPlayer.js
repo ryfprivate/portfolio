@@ -77,7 +77,7 @@ const useStyles = makeStyles({
 
 export default function AudioPlayer() {
     const classes = useStyles();
-    const [volume, setVolume] = useState(10);
+    const [volume, setVolume] = useState(5);
     const [trackIndex, setTrackIndex] = useState(0);
     const [trackProgress, setTrackProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -137,6 +137,7 @@ export default function AudioPlayer() {
         intervalRef.current = setInterval(() => {
             if (audioRef.current.ended) {
                 // Next track
+                toNextTrack();
             } else {
                 setTrackProgress(audioRef.current.currentTime);
             }
