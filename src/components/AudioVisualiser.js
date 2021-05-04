@@ -22,52 +22,6 @@ export default function AudioVisualiser({ samples }) {
         unityContext.send("Game", "SetFrequencySamples", freqString);
     }, [samples]);
 
-    // useEffect(() => {
-    //     createVisualization();
-
-    //     const timer = setInterval(() => {
-    //         setProgression((oldProgress) => {
-    //             if (oldProgress === 100) {
-    //                 return 0;
-    //             }
-    //             const diff = Math.random() * 10;
-    //             return Math.min(oldProgress + diff, 100);
-    //         });
-    //     }, 500);
-
-    //     return () => {
-    //         clearInterval(timer);
-    //     };
-    // })
-
-    // const createVisualization = () => {
-    //     let context, analyser, audioSrc;
-    //     context = new (window.AudioContext ||
-    //         window.webkitAudioContext)();
-    //     analyser = context.createAnalyser();
-    //     console.log("audiosrc" + audioSrc);
-    //     if (audioSrc === undefined) {
-    //         audioSrc = context.createMediaElementSource(props.audioRef.current);
-    //     }
-    //     audioSrc.connect(analyser);
-    //     audioSrc.connect(context.destination);
-    //     analyser.connect(context.destination);
-
-    //     analyser.fftSize = 1024;
-
-    //     function renderFrame() {
-    //         let freqData = new Uint8Array(analyser.frequencyBinCount);
-
-
-    //         requestAnimationFrame(renderFrame);
-    //         analyser.getByteFrequencyData(freqData);
-
-    //         let freqString = freqData.toString();
-    //         unityContext.send("Game", "SetFrequencySamples", freqString);
-    //     };
-    //     renderFrame();
-    // }
-
     return (
         <div>
             {loaded ?

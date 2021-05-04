@@ -3,22 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import photo from "../../images/beach.jpg";
 
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        textAlign: 'center',
-        backgroundColor: 'rgba(23, 23, 23, 0.5)',
-        color: 'white',
-        height: '50vh',
-        width: '50vw',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-        overflowX: 'hidden',
-    },
+const useStyles = makeStyles(() => ({
     column: {
         float: 'left',
         width: '50%',
@@ -28,15 +13,15 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.5em',
     },
     photo: {
-        height: '50%',
-        width: '50%',
+        height: '60%',
+        width: '60%',
     }
 }));
 
 export default function About() {
     const classes = useStyles();
 
-    return <>
+    return <div>
         <div className={classes.column}>
             <img className={classes.photo} alt='portrait' src={photo} />
         </div>
@@ -46,5 +31,5 @@ export default function About() {
             <p>I started developing games in 2018 however, I have been a hardcore gamer since the Golden Miniclip era.</p>
             <p>On this site, you'll find a bunch of random games that I made, have some fun and feel free to leave me some comments.</p>
         </div>
-    </>
+    </div>
 }

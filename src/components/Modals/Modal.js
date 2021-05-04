@@ -6,6 +6,9 @@ import { useSpring, animated } from '@react-spring/web';
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
 
+import About from './About';
+import Experience from './Experience';
+
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
@@ -22,18 +25,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
         overflowX: 'hidden',
     },
-    column: {
-        float: 'left',
-        width: '50%',
-    },
-    text: {
-        textAlign: 'left',
-        fontSize: '1.5em',
-    },
-    photo: {
-        height: '50%',
-        width: '50%',
-    }
 }));
 
 const Fade = React.forwardRef(function Fade(props, ref) {
@@ -60,8 +51,18 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     );
 });
 
-export default function Modal({ open, onClose, children }) {
+export default function Modal({ page, open, onClose }) {
     const classes = useStyles();
+
+    const renderContent = () => {
+        if (page === 'About') {
+            return <About />
+        }
+        if (page === 'Experience') {
+            return <Experience />
+        }
+        return <></>;
+    }
 
     return (
         <MModal
@@ -75,7 +76,7 @@ export default function Modal({ open, onClose, children }) {
         >
             <Fade in={open}>
                 <div className={classes.paper} data-simplebar >
-                    {children}
+                    {renderContent()}
                 </div>
             </Fade>
         </MModal>)

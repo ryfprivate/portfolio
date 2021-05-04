@@ -16,7 +16,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Modal from './Modals/Modal';
-import About from './Modals/About';
 
 import logo from '../images/rf_logo.png';
 
@@ -80,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavBar(props) {
     const classes = useStyles();
     const theme = useTheme();
+    const [page, setPage] = useState(null);
     const [open, setOpen] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -89,7 +89,8 @@ export default function NavBar(props) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const handleModalOpen = () => {
+    const handleModalOpen = (pageName) => {
+        setPage(pageName)
         setModalOpen(true);
     };
     const handleModalClose = () => {
@@ -143,15 +144,16 @@ export default function NavBar(props) {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem button onClick={handleModalOpen} >
+                    <ListItem button onClick={() => handleModalOpen('About')} >
                         <ListItemText primary='About' />
+                    </ListItem>
+                    <ListItem button onClick={() => handleModalOpen('Experience')} >
+                        <ListItemText primary='Experience' />
                     </ListItem>
                 </List>
                 <Divider />
             </Drawer>
-            <Modal open={modalOpen} onClose={handleModalClose}>
-                <About />
-            </Modal>
+            <Modal page={page} open={modalOpen} onClose={handleModalClose} />
         </div>
     );
 }
