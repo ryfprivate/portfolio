@@ -1,12 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import MModal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from '@react-spring/web';
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
-
-import photo from "../images/beach.jpg";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -62,11 +60,11 @@ const Fade = React.forwardRef(function Fade(props, ref) {
     );
 });
 
-export default function AboutModal({ open, onClose }) {
+export default function Modal({ open, onClose, children }) {
     const classes = useStyles();
 
     return (
-        <Modal
+        <MModal
             className={classes.modal}
             open={open}
             onClose={onClose}
@@ -77,16 +75,8 @@ export default function AboutModal({ open, onClose }) {
         >
             <Fade in={open}>
                 <div className={classes.paper} data-simplebar >
-                    <div className={classes.column}>
-                        <img className={classes.photo} src={photo} />
-                    </div>
-                    <div className={`${classes.column} ${classes.text}`}>
-                        <p>Hi, my name is Ray Feng.</p>
-                        <p>I'm a man of simple taste. I like things such as sports, games and...gasoline.</p>
-                        <p>I started developing games in 2018 however, I have been a hardcore gamer since the Golden Miniclip era.</p>
-                        <p>On this site, you'll find a bunch of random games that I made, have some fun and feel free to leave me some comments.</p>
-                    </div>
+                    {children}
                 </div>
             </Fade>
-        </Modal>)
+        </MModal>)
 };

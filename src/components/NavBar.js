@@ -15,7 +15,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import AboutModal from './AboutModal';
+import Modal from './Modals/Modal';
+import About from './Modals/About';
 
 import logo from '../images/rf_logo.png';
 
@@ -148,7 +149,9 @@ export default function NavBar(props) {
                 </List>
                 <Divider />
             </Drawer>
-            <AboutModal open={modalOpen} onClose={handleModalClose} />
+            <Modal open={modalOpen} onClose={handleModalClose}>
+                <About />
+            </Modal>
         </div>
     );
 }
