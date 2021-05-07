@@ -47,7 +47,6 @@ export default function Experience() {
     const classes = useStyles();
 
     return <div>
-        <h2 className={classes.title}>My Experience</h2>
         <div className={classes.column}>
             <img className={classes.photo} alt='portrait' src={hf} />
         </div>

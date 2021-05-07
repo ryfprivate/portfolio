@@ -71,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         backgroundColor: 'rgba(201, 76, 76, 0.3)',
         width: drawerWidth,
-        color: 'white'
+        color: 'white',
+        zIndex: 0
     },
 
 }));
@@ -149,6 +150,9 @@ export default function NavBar(props) {
                     </ListItem>
                     <ListItem button onClick={() => handleModalOpen('Experience')} >
                         <ListItemText primary='Experience' />
+                    </ListItem>
+                    <ListItem button onClick={() => handleModalOpen('Games')} >
+                        <ListItemText primary='Games' />
                     </ListItem>
                 </List>
                 <Divider />
