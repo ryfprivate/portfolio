@@ -7,11 +7,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Games() {
+export default function Art() {
     const classes = useStyles();
 
     return <div>
-        <h2 className={classes.title} >Games</h2>
+        <h2 className={classes.title} >Art</h2>
         <h3>Coming soon...</h3>
     </div>
 }

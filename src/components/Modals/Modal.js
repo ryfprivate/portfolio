@@ -8,6 +8,7 @@ import 'simplebar/dist/simplebar.css';
 
 import About from './About';
 import Experience from './Experience';
+import Art from './Art';
 import Games from './Games';
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +62,9 @@ export default function Modal({ page, open, onClose }) {
         }
         if (page === 'Experience') {
             return <Experience />
+        }
+        if (page === 'Art') {
+            return <Art />
         }
         if (page === 'Games') {
             return <Games />

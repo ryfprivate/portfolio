@@ -151,6 +151,9 @@ export default function NavBar(props) {
                     <ListItem button onClick={() => handleModalOpen('Experience')} >
                         <ListItemText primary='Experience' />
                     </ListItem>
+                    <ListItem button onClick={() => handleModalOpen('Art')} >
+                        <ListItemText primary='Art' />
+                    </ListItem>
                     <ListItem button onClick={() => handleModalOpen('Games')} >
                         <ListItemText primary='Games' />
                     </ListItem>
