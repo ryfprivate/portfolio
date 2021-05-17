@@ -3,10 +3,10 @@ import Unity, { UnityContext } from "react-unity-webgl";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const unityContext = new UnityContext({
-    loaderUrl: "Build/simple_bridge.loader.js",
-    dataUrl: "Build/simple_bridge.data",
-    frameworkUrl: "Build/simple_bridge.framework.js",
-    codeUrl: "Build/simple_bridge.wasm",
+    loaderUrl: "Build/audio_vis.loader.js",
+    dataUrl: "Build/audio_vis.data",
+    frameworkUrl: "Build/audio_vis.framework.js",
+    codeUrl: "Build/audio_vis.wasm",
 });
 
 
@@ -19,6 +19,7 @@ export default function AudioVisualiser({ samples }) {
 
     useEffect(() => {
         let freqString = samples.toString();
+        console.log(freqString);
         unityContext.send("Game", "SetFrequencySamples", freqString);
     }, [samples]);
 

@@ -77,6 +77,7 @@ const useStyles = makeStyles({
 
 export default function AudioPlayer() {
     const classes = useStyles();
+    const fft = 256;
     const [volume, setVolume] = useState(5);
     const [trackIndex, setTrackIndex] = useState(0);
     const [trackProgress, setTrackProgress] = useState(0);
@@ -148,7 +149,7 @@ export default function AudioPlayer() {
         audioContext.current = audioContext.current || new AudioContext();
         mediaSource.current = audioContext.current.createMediaElementSource(audioRef.current);
         analyser.current = audioContext.current.createAnalyser();
-        analyser.current.fftSize = 1024;
+        analyser.current.fftSize = fft;
         mediaSource.current.connect(audioContext.current.destination);
         mediaSource.current.connect(analyser.current);
         setAudioData(analyser.current);
@@ -174,7 +175,8 @@ export default function AudioPlayer() {
     // Effects
     useEffect(() => {
         requestAnimationFrame(runSpectrum);
-    }, [audioData, runSpectrum]);
+    },
+        [runSpectrum]);
 
     useEffect(() => {
         if (isPlaying) {
@@ -184,7 +186,8 @@ export default function AudioPlayer() {
         } else {
             audioRef.current.pause();
         }
-    }, [isPlaying]);
+    },
+        [isPlaying]);
 
     useEffect(() => {
         if (audioContext.current == null) return;
@@ -196,7 +199,8 @@ export default function AudioPlayer() {
         audioRef.current.volume = volume / parseFloat(100);
         audioRef.current.play();
         startTimer();
-    }, [trackIndex, audioSrc]);
+    },
+        [trackIndex, audioSrc]);
 
     return (
         <div>
