@@ -1,0 +1,43 @@
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paper {
+    text-align: center;
+    background-color: rgba(23, 23, 23, 0.5);
+    color: white;
+    height: 50vh;
+    width: 80vw;
+    padding: 3em;
+    overflow-x: hidden;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.text {
+    text-align: left;
+    font-size: 1.5em;
+}
+
+.photo {
+    width: 80%;
+}
+
+.title {
+    margin-top: 0;
+}
+
+@media screen and (max-width: 480px) {
+    .column {
+        float: none;
+        width: 100%;
+    }
+    .photo {
+        display: none;
+    }
+}

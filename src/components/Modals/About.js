@@ -1,35 +1,24 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import "./Modal.css";
 
-import photo from "../../images/beach.jpg";
-
-const useStyles = makeStyles(() => ({
-    column: {
-        float: 'left',
-        width: '50%',
-    },
-    text: {
-        textAlign: 'left',
-        fontSize: '1.5em',
-    },
-    photo: {
-        height: '60%',
-        width: '60%',
-    }
-}));
+import photo from "../../images/beach_cropped.jpg";
 
 export default function About() {
-    const classes = useStyles();
-
     return <div>
-        <div className={classes.column}>
-            <img className={classes.photo} alt='portrait' src={photo} />
+        <div className="column">
+            <img className="photo" alt='portrait' src={photo} />
         </div>
-        <div className={`${classes.column} ${classes.text}`}>
-            <p>Hi, my name is Ray Feng.</p>
-            <p>I'm a man of simple taste. I like things such as sports, games and...gasoline.</p>
-            <p>I started developing games in 2018 however, I have been a hardcore gamer since the Golden Miniclip era.</p>
-            <p>On this site, you'll find a bunch of my random creations.</p>
+        <div className="column text">
+            <p className="title">Hi, my name is Ray Feng.</p>
+            <p>I'm a man of simple taste. I like things such as movies, games and...gasoline.</p>
+            <p>I believe when you create something, you are leaving behind an essence of your soul. I want to keep doing that
+            for as long as I can until maybe someday, all parts of my soul exist somewhere in the form of one of my creations.
+            Then, when I inevitably lose my body to time, my spirit still lives on through the pieces of my legacy that I have
+            left behind. That is when I have achieved true immortality...
+            </p>
+            <p>Hence, this website serves as a vessel for some of my creations. I love playing games and especially love making
+            them, so feel free to check them out and maybe even leave me your thoughts on them.
+            </p>
         </div>
     </div>
 }

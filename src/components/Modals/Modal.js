@@ -1,33 +1,15 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import MModal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from '@react-spring/web';
 import 'simplebar';
 import 'simplebar/dist/simplebar.css';
+import './Modal.css';
 
 import About from './About';
 import Experience from './Experience';
 import Art from './Art';
 import Games from './Games';
-
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        textAlign: 'center',
-        backgroundColor: 'rgba(23, 23, 23, 0.5)',
-        color: 'white',
-        height: '50vh',
-        width: '50vw',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-        overflowX: 'hidden',
-    },
-}));
 
 const Fade = React.forwardRef(function Fade(props, ref) {
     const { in: open, children, onEnter, onExited, ...other } = props;
@@ -54,8 +36,6 @@ const Fade = React.forwardRef(function Fade(props, ref) {
 });
 
 export default function Modal({ page, open, onClose }) {
-    const classes = useStyles();
-
     const renderContent = () => {
         if (page === 'About') {
             return <About />
@@ -74,7 +54,7 @@ export default function Modal({ page, open, onClose }) {
 
     return (
         <MModal
-            className={classes.modal}
+            className="modal"
             open={open}
             onClose={onClose}
             BackdropComponent={Backdrop}
@@ -83,7 +63,7 @@ export default function Modal({ page, open, onClose }) {
             }}
         >
             <Fade in={open}>
-                <div className={classes.paper} data-simplebar >
+                <div className="paper" data-simplebar >
                     {renderContent()}
                 </div>
             </Fade>

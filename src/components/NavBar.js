@@ -91,6 +91,7 @@ export default function NavBar(props) {
         setOpen(false);
     };
     const handleModalOpen = (pageName) => {
+        handleDrawerClose();
         setPage(pageName)
         setModalOpen(true);
     };
