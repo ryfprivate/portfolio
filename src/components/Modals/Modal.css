@@ -24,12 +24,38 @@
     font-size: 1.5em;
 }
 
-.photo {
+.title {
+    margin-top: 0;
+}
+
+/* About */
+.photo--about {
     width: 80%;
 }
 
-.title {
-    margin-top: 0;
+/* Experience */
+.row {
+    display: flex;
+    margin-bottom: 1px;
+}
+
+.column--experience {
+    padding: 2%;
+}
+
+.photo--experience {
+    width: 500px;
+}
+
+.text__date {
+    font-size: 0.8em;
+}
+
+@media screen and (max-width: 1200px) {
+    /* Experience */
+    .photo--experience {
+        width: 300px;
+    }    
 }
 
 @media screen and (max-width: 480px) {
@@ -37,7 +63,15 @@
         float: none;
         width: 100%;
     }
-    .photo {
-        display: none;
+    .photo--about {
+        margin-bottom: 10px;
+    }
+
+    /* Experience */
+    .row {
+        flex-direction: column;
+    }
+    .photo--experience {
+        width: 250px;
     }
 }

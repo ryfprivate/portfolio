@@ -6,7 +6,7 @@ import photo from "../../images/beach_cropped.jpg";
 export default function About() {
     return <div>
         <div className="column">
-            <img className="photo" alt='portrait' src={photo} />
+            <img className="photo--about" alt='portrait' src={photo} />
         </div>
         <div className="column text">
             <p className="title">Hi, my name is Ray Feng.</p>
