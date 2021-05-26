@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import { useRoutes, A } from "hookrouter"
+import React from "react";
+import { useRoutes } from "hookrouter"
 import NavBar from "./components/NavBar";
-import Art from "./components/Art";
-import Games from "./components/Games";
-import AudioPlayer from "./components/AudioPlayer";
-import AudioVisualiser from "./components/AudioVisualiser"
-import DiscoCruiser from "./components/Games/DiscoCruiser"
+
 import Home from "./components/Home"
+import Games from "./components/Games";
+import Art from "./components/Art";
 
 import './App.css';
 
@@ -22,7 +20,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <NavBar />
-        <A href="/">HOme</A>
         {routeResult}
       </header>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { A } from "hookrouter"
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -26,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     navContent: {
-        width: '80%',
+        width: '40%',
         justifyContent: 'center',
     },
     appBar: {
-        backgroundColor: 'rgba(201, 76, 76, 0.3)',
+        backgroundColor: 'rgba(201, 76, 76, 0.1)',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -119,13 +120,15 @@ export default function NavBar(props) {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <IconButton >
-                            <img className={classes.logo} alt='logo' src={logo} />
-                        </IconButton>
+                        <A href="/">
+                            <IconButton >
+                                <img className={classes.logo} alt='logo' src={logo} />
+                            </IconButton>
+                        </A>
                     </div>
                     <div style={{ marginLeft: '25px' }} className={classes.toolbarItem}>
                         <Typography variant="h6" noWrap>
-                            Home: Audio Visualizer
+                            Home
                     </Typography>
                     </div>
                 </Toolbar>
