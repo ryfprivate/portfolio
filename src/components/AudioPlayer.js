@@ -15,10 +15,8 @@ import tracks from '../tracks';
 const useStyles = makeStyles({
     root: {
         position: 'fixed',
-        bottom: '0',
-        left: '0',
-        height: '10vh',
-        width: '100vw',
+        top: '0',
+        right: '0',
 
         display: 'flex',
         flexDirection: 'column',
@@ -37,15 +35,14 @@ const useStyles = makeStyles({
         width: '95%',
     },
     audio: {
-        height: '7vh',
-        width: '100vw',
         display: 'flex',
         alignItems: 'center',
-        flexDirection: 'row',
+        flexDirection: 'column',
     },
     audio_section: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: '0.5em'
     },
     audio_left: {
         flexGrow: '1',
@@ -204,14 +201,6 @@ export default function AudioPlayer({ setSamples }) {
     return (
         <div>
             <div className={classes.root}>
-                <div className={classes.slider}>
-                    <Slider
-                        className={classes.slider_input}
-                        value={trackProgress}
-                        min={0}
-                        max={duration ? duration : 0}
-                    />
-                </div>
                 <div className={classes.audio}>
                     <div className={`${classes.audio_section} ${classes.audio_left}`}>
                         <IconButton onClick={toPrevTrack} className={classes.button}>
