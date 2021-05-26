@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import styled from "styled-components"
 import { A } from "hookrouter"
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Collapse from '@material-ui/core/Collapse';
+import Slide from '@material-ui/core/Slide';
+import Grow from '@material-ui/core/Grow';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -20,47 +24,10 @@ import Modal from './Modals/Modal';
 
 import logo from '../images/rf_logo.png';
 
+const bgColor = 'rgba(201, 76, 76, 0.1)';
 const drawerWidth = 150;
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    navContent: {
-        width: '40%',
-        justifyContent: 'center',
-    },
-    appBar: {
-        backgroundColor: 'rgba(201, 76, 76, 0.1)',
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    toolbar: {
-        display: 'flex',
-        width: '100%'
-    },
-    toolbarItem: {
-        display: 'flex',
-        justifyContent: 'flex-start'
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    logo: {
-        width: '50px',
-        height: '50px',
-        marginBottom: '5px'
-    },
     hide: {
         visibility: 'hidden',
     },
@@ -69,14 +36,22 @@ const useStyles = makeStyles((theme) => ({
         flexShrink: 0,
     },
     drawerPaper: {
-        alignItems: 'center',
-        backgroundColor: 'rgba(201, 76, 76, 0.3)',
+        backgroundColor: bgColor,
         width: drawerWidth,
         color: 'white',
         zIndex: 0
     },
-
+    drawerHeader: {
+        minHeight: '64px'
+    }
 }));
+
+const LeftBar = styled.div`
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: ${bgColor};
+`
 
 export default function NavBar(props) {
     const classes = useStyles();
@@ -102,7 +77,69 @@ export default function NavBar(props) {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
+            <Slide in={!open} direction='right'>
+                <LeftBar>
+                    <Toolbar>
+                        <div>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                edge="start"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <A href="/">
+                                <IconButton >
+                                    <img className={classes.logo} alt='logo' src={logo} />
+                                </IconButton>
+                            </A>
+                        </div>
+                    </Toolbar>
+                </LeftBar>
+            </Slide>
+            <Drawer
+                className={classes.drawer}
+                variant="persistent"
+                anchor="left"
+                open={open}
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+            >
+                <div className={classes.drawerHeader}>
+                    <IconButton style={{ color: 'white' }} onClick={handleDrawerClose}>
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                    </IconButton>
+                    <A href="/">
+                        <IconButton >
+                            <img className={classes.logo} alt='logo' src={logo} />
+                        </IconButton>
+                    </A>
+                </div>
+                <Divider />
+                <List>
+                    <ListItem button onClick={() => handleModalOpen('About')} >
+                        <ListItemText primary='About' />
+                    </ListItem>
+                    <ListItem button onClick={() => handleModalOpen('Experience')} >
+                        <ListItemText primary='Experience' />
+                    </ListItem>
+                    <ListItem button onClick={() => window.location.href = "/art"} >
+                        <ListItemText primary='Art' />
+                    </ListItem>
+                    <ListItem button onClick={() => window.location.href = "/games"}>
+                        <ListItemText primary='Games' />
+                    </ListItem>
+                </List>
+                <Divider />
+            </Drawer>
+            <Modal page={page} open={modalOpen} onClose={handleModalClose} />
+        </div >
+    );
+}
+
+{/* <CssBaseline />
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
@@ -132,39 +169,4 @@ export default function NavBar(props) {
                     </Typography>
                     </div>
                 </Toolbar>
-            </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <div className={classes.drawerHeader}>
-                    <IconButton style={{ color: 'white' }} onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    <ListItem button onClick={() => handleModalOpen('About')} >
-                        <ListItemText primary='About' />
-                    </ListItem>
-                    <ListItem button onClick={() => handleModalOpen('Experience')} >
-                        <ListItemText primary='Experience' />
-                    </ListItem>
-                    <ListItem button onClick={() => window.location.href = "/art"} >
-                        <ListItemText primary='Art' />
-                    </ListItem>
-                    <ListItem button onClick={() => window.location.href = "/games"}>
-                        <ListItemText primary='Games' />
-                    </ListItem>
-                </List>
-                <Divider />
-            </Drawer>
-            <Modal page={page} open={modalOpen} onClose={handleModalClose} />
-        </div>
-    );
-}
+            </AppBar> */}
