@@ -7,34 +7,12 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import VolumeUp from '@material-ui/icons/VolumeUp';
-
+import Popper from '@material-ui/core/Popper';
 import Slider from '@material-ui/core/Slider';
 
 import tracks from '../tracks';
 
 const useStyles = makeStyles({
-    root: {
-        position: 'fixed',
-        top: '0',
-        right: '0',
-        maxWidth: '300px',
-
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        backgroundColor: 'rgba(0, 0, 0, 0)',
-        opacity: '0.7',
-    },
-    slider: {
-        width: '100vw',
-        height: '3vh',
-    },
-    slider_input: {
-        color: 'white',
-        width: '95%',
-    },
     audio: {
         display: 'flex',
         alignItems: 'center',
@@ -43,26 +21,24 @@ const useStyles = makeStyles({
     audio_section: {
         display: 'flex',
         alignItems: 'center',
-        padding: '0.5em'
+        paddingTop: '0.5em',
+        width: '100%'
     },
     audio_left: {
-        flexGrow: '1',
+        display: 'flex',
+        flexGrow: 1,
         justifyContent: 'flex-start',
-        marginLeft: '15px'
-    },
-    audio_middle: {
-        flexGrow: '3',
-        justifyContent: 'center',
-        fontSize: '18px',
     },
     audio_right: {
-        flexGrow: '1',
+        display: 'flex',
+        flexGrow: 1,
         justifyContent: 'flex-end',
         marginRight: '40px'
     },
     desc: {
         marginLeft: '20px',
         textAlign: 'left',
+        fontSize: '18px',
     },
     volume: {
         color: 'white',
@@ -81,6 +57,9 @@ export default function AudioPlayer({ setSamples }) {
     const [trackProgress, setTrackProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [audioData, setAudioData] = useState(null);
+    const [anchorVol, setAnchorVol] = useState(null);
+    const open = Boolean(anchorVol);
+    const id = open ? 'simple-popper' : undefined;
     // Singleton variable (to ensure initializeAudioAnaylser only calls once)
     const [started, setStarted] = useState(false);
     // Tracks
@@ -97,6 +76,10 @@ export default function AudioPlayer({ setSamples }) {
     const { duration } = audioRef.current;
 
     // Events
+    const handleVolumeClick = (event) => {
+        setAnchorVol(anchorVol ? null : event.currentTarget)
+    }
+
     const handleVolumeChange = (event, newValue) => {
         setVolume(newValue);
         audioRef.current.volume = volume / parseFloat(100);
@@ -199,12 +182,28 @@ export default function AudioPlayer({ setSamples }) {
     },
         [trackIndex, audioSrc]);
 
+    useEffect(() => {
+        return function cleanup() {
+            if (audioContext.current == null) return;
+            audioRef.current.pause();
+        }
+    }, [])
+
     return (
         <div>
-            <div className={classes.root}>
-                <div className={classes.audio}>
-                    <div className={`${classes.audio_section} ${classes.audio_left}`}>
-                        <IconButton onClick={toPrevTrack} className={classes.button}>
+            <div className={classes.audio}>
+                <div className={classes.audio_section}>
+                    <img src={imgSrc}
+                        alt="Song cover" width="50" height="50"
+                    />
+                    <div className={classes.desc} >
+                        <div><strong>{title}</strong></div>
+                        <div>{artist}</div>
+                    </div>
+                </div>
+                <div className={`${classes.audio_section} `}>
+                    <div className={classes.audio_left}>
+                        <IconButton onClick={toPrevTrack} className={classes.button} style={{ paddingLeft: 0 }}>
                             <SkipPreviousIcon />
                         </IconButton>
                         <IconButton onClick={togglePlay} className={classes.button}>
@@ -216,26 +215,19 @@ export default function AudioPlayer({ setSamples }) {
                             <SkipNextIcon />
                         </IconButton>
                     </div>
-                    <div className={`${classes.audio_section} ${classes.audio_middle}`}>
-                        <img src={imgSrc}
-                            alt="Song cover" width="50" height="50"
-                        />
-                        <div className={classes.desc} >
-                            <div><strong>{title}</strong></div>
-                            <div>{artist}</div>
-                        </div>
-                    </div>
-                    <div className={`${classes.audio_section} ${classes.audio_right}`}>
-                        <IconButton className={classes.button}>
+                    <div className={classes.audio_right}>
+                        <IconButton button aria-describedby={id} className={classes.button} onClick={handleVolumeClick} >
                             <VolumeUp />
                         </IconButton>
-                        <Slider
-                            className={classes.volume}
-                            value={volume}
-                            onChange={handleVolumeChange}
-                            min={0}
-                            max={100}
-                        />
+                        <Popper id={id} open={open} anchorEl={anchorVol}>
+                            <Slider
+                                className={classes.volume}
+                                value={volume}
+                                onChange={handleVolumeChange}
+                                min={0}
+                                max={100}
+                            />
+                        </Popper>
                     </div>
                 </div>
             </div>
