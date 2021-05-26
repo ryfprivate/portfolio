@@ -23,7 +23,7 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
 
-        backgroundColor: 'rgba(201, 76, 76, 0.3)',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
         opacity: '0.7',
     },
     slider: {
