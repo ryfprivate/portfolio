@@ -4,24 +4,22 @@ import NavBar from "./components/NavBar";
 
 import Home from "./components/Home"
 import Games from "./components/Games";
-import Art from "./components/Art";
+import DiscoCruiser from "./components/Games/DiscoCruiser";
 
 import './App.css';
 
 const routes = {
   '/': () => <Home />,
   '/games': () => <Games />,
-  '/art': () => <Art />
+  '/disco-cruiser': () => <DiscoCruiser />
 }
 
 function App() {
   const routeResult = useRoutes(routes)
   return (
     <div className="App">
-      <header className="App-header">
-        <NavBar />
-        {routeResult}
-      </header>
+      <NavBar />
+      {routeResult}
     </div>
   );
 }

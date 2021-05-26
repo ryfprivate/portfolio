@@ -1,8 +1,16 @@
 import lady from './audio/Lady.mp3';
 import beautiful from './audio/Beautiful.mp3';
+import fortunate from './audio/Fortunate_Son.mp3';
 import licht from './audio/Licht.mp3';
+import touch from './audio/touchmeimgoingtoscream.mp3';
 
 const tracks = [
+    {
+        title: "Touch Me I'm Going To Scream",
+        artist: "My Morning Jacket",
+        audioSrc: touch,
+        imgSrc: "https://lightning100.com/wp-content/uploads/My-Morning-Jacket.jpg"
+    },
     {
         title: "Licht und Schatten",
         artist: "Yutaka Yamada",
@@ -20,6 +28,12 @@ const tracks = [
         artist: "DPR Ian",
         audioSrc: beautiful,
         imgSrc: "https://lab.fm/wp-content/uploads/2021/03/032321-dpr-ian-scaredy-cat-youtube.jpg"
+    },
+    {
+        title: "Fortunate Son",
+        artist: "Creedence Clearwater Revival",
+        audioSrc: fortunate,
+        imgSrc: "https://pbs.twimg.com/profile_images/1285254031250612224/9ygNuJyT_400x400.jpg"
     },
 ];
 

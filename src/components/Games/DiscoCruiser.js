@@ -1,16 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 import Unity, { UnityContext } from "react-unity-webgl";
 
 const ctxAudioVis = new UnityContext({
-    loaderUrl: "Build/audio_vis.loader.js",
-    dataUrl: "Build/audio_vis.data",
-    frameworkUrl: "Build/audio_vis.framework.js",
-    codeUrl: "Build/audio_vis.wasm",
+    loaderUrl: "Build/DiscoCruiser.loader.js",
+    dataUrl: "Build/DiscoCruiser.data",
+    frameworkUrl: "Build/DiscoCruiser.framework.js",
+    codeUrl: "Build/DiscoCruiser.wasm",
 });
+
+const Title = styled.h2`
+    margin: 0;
+    padding: 12px;
+`
 
 export default function DiscoCruiser() {
     return <>
-        <h1>DiscoCruiser</h1>
+        <Title>Disco Cruiser</Title>
         <Unity
             unityContext={ctxAudioVis}
             style={{

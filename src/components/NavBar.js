@@ -119,9 +119,6 @@ export default function NavBar(props) {
                     <ListItem button onClick={() => handleModalOpen('Experience')} >
                         <ListItemText primary='Experience' />
                     </ListItem>
-                    <ListItem button onClick={() => window.location.href = "/art"} >
-                        <ListItemText primary='Art' />
-                    </ListItem>
                     <ListItem button onClick={() => window.location.href = "/games"}>
                         <ListItemText primary='Games' />
                     </ListItem>
@@ -132,35 +129,3 @@ export default function NavBar(props) {
         </div >
     );
 }
-
-{/* <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar className={classes.toolbar}>
-                    <div className={classes.toolbarItem}>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            className={clsx(classes.menuButton, open && classes.hide)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <A href="/">
-                            <IconButton >
-                                <img className={classes.logo} alt='logo' src={logo} />
-                            </IconButton>
-                        </A>
-                    </div>
-                    <div style={{ marginLeft: '25px' }} className={classes.toolbarItem}>
-                        <Typography variant="h6" noWrap>
-                            Home
-                    </Typography>
-                    </div>
-                </Toolbar>
-            </AppBar> */}

@@ -1,8 +1,11 @@
 import React from "react";
-import DiscoCruiser from "./Games/DiscoCruiser";
+import { A } from 'hookrouter';
 
-export default function Games({ unityCtx }) {
+export default function Games() {
     return <>
         <h2>Games</h2>
+        <A href="/disco-cruiser">
+            Disco Cruiser
+        </A>
     </>
 }

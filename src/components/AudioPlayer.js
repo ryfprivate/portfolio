@@ -17,6 +17,7 @@ const useStyles = makeStyles({
         position: 'fixed',
         top: '0',
         right: '0',
+        maxWidth: '300px',
 
         display: 'flex',
         flexDirection: 'column',
