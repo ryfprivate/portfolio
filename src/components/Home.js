@@ -1,8 +1,13 @@
-import React from "react"
+import React, { useState } from "react"
+import AudioPlayer from "./AudioPlayer"
+import AudioVisualiser from "./AudioVisualiser"
 
 export default function Home() {
+    const [samples, setSamples] = useState([]);
     return (
-        <h2>Home</h2>
-
+        <>
+            <AudioPlayer setSamples={setSamples}></AudioPlayer>
+            <AudioVisualiser samples={samples}></AudioVisualiser>
+        </>
     )
 }
