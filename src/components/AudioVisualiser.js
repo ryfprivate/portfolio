@@ -23,9 +23,12 @@ export default function AudioVisualiser({ samples }) {
         setProgress(progress);
     });
 
+    unityContext.on("quitted", () => {
+
+    });
+
     useEffect(() => {
         let freqString = samples.toString();
-        console.log(freqString);
         unityContext.send("Game", "SetFrequencySamples", freqString);
     }, [samples]);
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AudioVisualiser from "./AudioVisualiser";
 
 import IconButton from '@material-ui/core/IconButton';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
@@ -75,7 +74,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function AudioPlayer() {
+export default function AudioPlayer({ setSamples }) {
     const classes = useStyles();
     const fft = 256;
     const [volume, setVolume] = useState(5);
@@ -83,7 +82,6 @@ export default function AudioPlayer() {
     const [trackProgress, setTrackProgress] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [audioData, setAudioData] = useState(null);
-    const [samples, setSamples] = useState([]);
     // Singleton variable (to ensure initializeAudioAnaylser only calls once)
     const [started, setStarted] = useState(false);
     // Tracks
@@ -204,7 +202,6 @@ export default function AudioPlayer() {
 
     return (
         <div>
-            <AudioVisualiser samples={samples} />
             <div className={classes.root}>
                 <div className={classes.slider}>
                     <Slider

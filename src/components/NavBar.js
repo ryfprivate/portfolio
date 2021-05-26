@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -119,9 +120,11 @@ export default function NavBar(props) {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <IconButton >
-                            <img className={classes.logo} alt='logo' src={logo} />
-                        </IconButton>
+                        <Link to="/">
+                            <IconButton >
+                                <img className={classes.logo} alt='logo' src={logo} />
+                            </IconButton>
+                        </Link>
                     </div>
                     <div style={{ marginLeft: '25px' }} className={classes.toolbarItem}>
                         <Typography variant="h6" noWrap>
@@ -152,10 +155,10 @@ export default function NavBar(props) {
                     <ListItem button onClick={() => handleModalOpen('Experience')} >
                         <ListItemText primary='Experience' />
                     </ListItem>
-                    <ListItem button onClick={() => handleModalOpen('Art')} >
+                    <ListItem button onClick={() => window.location.href = "/art"} >
                         <ListItemText primary='Art' />
                     </ListItem>
-                    <ListItem button onClick={() => handleModalOpen('Games')} >
+                    <ListItem button onClick={() => window.location.href = "/games"}>
                         <ListItemText primary='Games' />
                     </ListItem>
                 </List>
