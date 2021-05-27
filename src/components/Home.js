@@ -13,6 +13,10 @@ const AudioWrapper = styled.div`
     flexDirection: column
     justifyContent: center
     alignItems: center;
+
+    @media (max-width: 768px) {
+        width: 200px;
+    }
 `
 
 export default function Home() {
