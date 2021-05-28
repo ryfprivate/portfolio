@@ -4,7 +4,9 @@ import NavBar from "./components/NavBar";
 
 import Home from "./components/Home"
 import Games from "./components/Games";
-import DiscoCruiser from "./components/Games/DiscoCruiser";
+
+// Unity games
+import DiscoCruiser from "./components/Unity/DiscoCruiser";
 
 import './App.css';
 

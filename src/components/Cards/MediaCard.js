@@ -11,6 +11,14 @@ const SCard = styled(Card)`
     border-radius: 25px;
     background: rgba(61, 66, 82, 1);
     color: white;
+    height: 400px;
+    width: 300px;
+    opacity: 0.8;
+    transition: 0.5s;
+
+    &:hover {
+        opacity: 1;
+    }
 `
 
 const Content = styled(CardContent)`
@@ -26,21 +34,12 @@ export default function MediaCard({ handleClick, bgImg, children }) {
                 <CardMedia
                     component="img"
                     image={bgImg}
-                    height="640"
                     title="Disco Cruiser"
                 />
                 <Content>
                     {children}
                 </Content>
             </CardActionArea>
-            {/* <CardActions>
-                <Button size="small" color="primary">
-                    Share
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
-                </Button>
-            </CardActions> */}
         </SCard>
     )
 }
