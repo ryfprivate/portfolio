@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components"
 import { A } from 'hookrouter';
-import Unity, { UnityContext } from "react-unity-webgl";
+import { UnityContext } from "react-unity-webgl";
+import UnityGame from "./Unity/UnityGame";
 
 import MediaCard from "./Cards/MediaCard"
 
@@ -22,12 +23,10 @@ const Content = styled.div`
 
 export default function Games() {
     return <>
-        <Unity
-            unityContext={unityContext}
-            style={{
-                height: "100vh",
-                width: "100vw"
-            }} />
+        <UnityGame
+            context={unityContext}
+            height="100vh"
+            width="100vw" />
         <Content>
             <MediaCard bgImg={img_discoCruiser} handleClick={() => { window.location.href = "/disco-cruiser" }}>
                 <h2>Disco Cruiser</h2>

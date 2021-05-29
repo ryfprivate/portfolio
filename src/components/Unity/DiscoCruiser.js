@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AudioPlayer from "../AudioPlayer"
-import Unity, { UnityContext } from "react-unity-webgl";
+import { UnityContext } from "react-unity-webgl";
+import UnityGame from "./UnityGame";
 
 const unityContext = new UnityContext({
     loaderUrl: "Build/DiscoCruiser.loader.js",
@@ -44,11 +45,9 @@ export default function DiscoCruiser() {
             <AudioPlayer setSamples={setSamples}></AudioPlayer>
         </AudioWrapper>
         <Title>Disco Cruiser</Title>
-        <Unity
-            unityContext={unityContext}
-            style={{
-                height: "75vh",
-                width: "75vw"
-            }} />
+        <UnityGame
+            context={unityContext}
+            height="75vh"
+            width="75vw" />
     </>
 }
