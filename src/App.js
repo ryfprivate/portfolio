@@ -7,13 +7,15 @@ import Games from "./components/Games";
 
 // Unity games
 import DiscoCruiser from "./components/Unity/DiscoCruiser";
+import Test from "./components/Unity/Test";
 
 import './App.css';
 
 const routes = {
   '/': () => <Home />,
   '/games': () => <Games />,
-  '/disco-cruiser': () => <DiscoCruiser />
+  '/disco-cruiser': () => <DiscoCruiser />,
+  '/disco-cruiser-2': () => <Test />
 }
 
 function App() {
