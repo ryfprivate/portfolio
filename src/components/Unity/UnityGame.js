@@ -21,7 +21,8 @@ const Loader = styled(LinearProgress)`
     }
 `
 
-export default function UnityGame({ context, height, width }) {
+export default function UnityGame(props) {
+    const { context, height, width } = props;
     const [progress, setProgress] = useState(50);
     const [loaded, setLoaded] = useState(false);
 
@@ -48,7 +49,6 @@ export default function UnityGame({ context, height, width }) {
                 unityContext={context}
                 style={{
                     position: 'fixed',
-                    left: 0,
                     height: height,
                     width: width
                 }} />

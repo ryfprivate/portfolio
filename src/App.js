@@ -1,29 +1,39 @@
-import React from "react";
+import React, { useState } from "react"
 import { useRoutes } from "hookrouter"
-import NavBar from "./components/NavBar";
+import Header from "./components/Header"
 
 import Home from "./components/Home"
-import Games from "./components/Games";
+import Games from "./components/Games"
 
 // Unity games
-import DiscoCruiser from "./components/Unity/DiscoCruiser";
-import Test from "./components/Unity/Test";
+import DiscoCruiser from "./components/Unity/DiscoCruiser"
+import Test from "./components/Unity/Test"
 
 import './App.css';
 
 const routes = {
-  '/': () => <Home />,
+  '/': () => (scrollActions) => <Home scrollActions={scrollActions} />,
   '/games': () => <Games />,
   '/disco-cruiser': () => <DiscoCruiser />,
   '/disco-cruiser-2': () => <Test />
 }
 
 function App() {
+  const [showHeader, setShowHeader] = useState(false)
   const routeResult = useRoutes(routes)
+
+  const scrollActions = (data) => {
+    if (data.scrollTop > 50) {
+      setShowHeader(true)
+    } else {
+      setShowHeader(false)
+    }
+  }
+
   return (
     <div className="App">
-      <NavBar />
-      {routeResult}
+      <Header show={showHeader} />
+      {routeResult(scrollActions)}
     </div>
   );
 }
