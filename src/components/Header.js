@@ -50,6 +50,7 @@ const SLinkText = styled.div`
     font-size: 1em;
     color: black;
     font-family: 'Indie Flower', cursive;
+    padding: 0 1em;
 `
 
 const HideOnScroll = (props) => {
@@ -75,6 +76,9 @@ const Header = (props) => {
             <Right>
                 <SLink href="/games">
                     <SLinkText>Games</SLinkText>
+                </SLink>
+                <SLink href="/contact">
+                    <SLinkText>Contact</SLinkText>
                 </SLink>
             </Right>
         </SAppBar>

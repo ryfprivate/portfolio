@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { UnityContext } from "react-unity-webgl";
+import React, { useEffect, useState } from "react"
+import { UnityContext } from "react-unity-webgl"
 
-import UnityGame from "./UnityGame";
+import UnityGame from "./UnityGame"
 
 const unityContext = new UnityContext({
     loaderUrl: "Build/website/website.loader.js",
@@ -11,7 +11,12 @@ const unityContext = new UnityContext({
 });
 
 export default function OceanView(props) {
-    const { height, width } = props;
+    const { height, width, level } = props
+
+    useEffect(() => {
+        unityContext.send("Main", "Toggle");
+    }, [level]);
+
     return (
         <UnityGame
             context={unityContext}

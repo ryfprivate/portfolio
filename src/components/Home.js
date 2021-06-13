@@ -1,64 +1,60 @@
 import React, { useState, useRef } from "react"
 import { Scrollbars } from "react-custom-scrollbars-2"
 // Styling
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import IconButton from '@material-ui/core/IconButton'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import Fade from '@material-ui/core/Fade'
 
-import AudioPlayer from "./AudioPlayer"
-import AudioVisualiser from "./Unity/AudioVisualiser"
 import OceanView from "./Unity/OceanView"
 
-const AudioWrapper = styled.div`
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 350px;
+// Common 
+const Button = styled.button`
+    font-family: 'Indie Flower', cursive;
+    font-size: 2em;
+    padding: 1em;
+    border: none;
 
-    display: flex
-    flexDirection: column
-    justifyContent: center
-    alignItems: center;
-
-    @media (max-width: 768px) {
-        width: 200px;
+    background: transparent;
+    transition: background 1s;
+    
+    :hover {
+        background: rgba(0,0,0,0.1);
+        cursor: pointer;
     }
 `
-
+// ------
 const Canvas = styled.div`
-    display: ${props => props.show ? 'flex' : 'none'};
+    display: flex;
     flex-direction: column;
     align-items: center;
 
     height: 100vh;
     width: 100vw;
-    // background-color: transparent;
-    // opacity: 1;
+    opacity: ${props => props.show ? '1' : '0'};
+    transition: opacity 2s;
 `
-const ExpandButton = styled.button`
+const ExpandButton = styled(Button)`
     background: transparent;
     height: 150px;
     width: 100vw;
-    font-family: 'Indie Flower', cursive;
     font-size: 32px;
-    border-style: none;
-    transition: background, 0.3s;
-
-    :hover {
-        background: rgba(0,0,0,0.05);
-        cursor: pointer;
-    }
 `
 const Text = styled.div`
     color: white;
 `
 const ContentSection = styled.div`
-    flex-grow: 1;
+    flex-grow: 2;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+`
+const Buttons = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 60vw;
 `
 const BottomSection = styled.div`
     flex-grow: 1;
@@ -68,44 +64,72 @@ const BottomSection = styled.div`
 `
 
 export default function Home(props) {
-    const { scrollActions } = props;
-    const [open, setOpen] = useState(false)
+    const { scrollActions } = props
+    const [show, setShow] = useState(true)
+    const [level, setLevel] = useState(0)
+    const [gameLevel, setGameLevel] = useState(0)
+
+    const Descend = () => {
+        const nextLevel = level + 1
+        setShow(false)
+        setGameLevel(nextLevel)
+        setTimeout(() => {
+            setShow(nextLevel)
+            setLevel(1)
+        }, 2000)
+    }
+
+    const AscendToTop = () => {
+        setShow(false)
+        setGameLevel(0)
+        setTimeout(() => {
+            setShow(true)
+            setLevel(0)
+        }, 2000)
+    }
+
+    const Levels = () => {
+        if (level === 1) {
+            return <Canvas show={show}>
+                <ContentSection>
+                    <Buttons>
+                        <Button>Game Projects</Button>
+                        <Button>Web Projects</Button>
+                    </Buttons>
+                </ContentSection>
+                <BottomSection>
+                    <ExpandButton onClick={AscendToTop}>
+                        <ExpandLessIcon style={{ color: 'white' }} fontSize="large" />
+                        <Text>Back</Text>
+                    </ExpandButton>
+                </BottomSection>
+            </Canvas>
+        }
+        else {
+            return <Canvas show={show}>
+                <BottomSection>
+                    <ExpandButton onClick={Descend}>
+                        <Text>Next</Text>
+                        <ExpandMoreIcon style={{ color: 'white' }} fontSize="large" />
+                    </ExpandButton>
+                </BottomSection>
+            </Canvas>
+        }
+    }
 
     return (
         <>
             <OceanView
                 height="100vh"
                 width="100vw"
+                level={gameLevel}
             />
 
             <Scrollbars
                 style={{ width: '100vw', height: '100vh' }}
                 onScrollFrame={(data) => scrollActions(data)}
             >
-                <Fade in={!open} timeout={3000}>
-                    <Canvas show={!open}>
-                        <BottomSection>
-                            <ExpandButton onClick={() => setOpen(true)}>
-                                <Text>Next</Text>
-                                <ExpandMoreIcon style={{ color: 'white' }} fontSize="large" />
-                            </ExpandButton>
-                        </BottomSection>
-                    </Canvas>
-                </Fade>
-                <Fade in={open} timeout={3000}>
-                    <Canvas show={open}>
-                        <ContentSection>
-                            <button>Game Projects</button>
-                            <button>Web Projects</button>
-                        </ContentSection>
-                        <BottomSection>
-                            <ExpandButton onClick={() => setOpen(false)}>
-                                <ExpandLessIcon style={{ color: 'white' }} fontSize="large" />
-                                <Text>Back</Text>
-                            </ExpandButton>
-                        </BottomSection>
-                    </Canvas>
-                </Fade>
+                {Levels()}
             </Scrollbars>
         </>
     )
