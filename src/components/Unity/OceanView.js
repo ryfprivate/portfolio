@@ -11,10 +11,9 @@ const unityContext = new UnityContext({
 });
 
 export default function OceanView(props) {
-    const { height, width, level } = props
+    const { height, width, level, onLoaded } = props
 
     useEffect(() => {
-        console.log("move to level " + level)
         unityContext.send("Levels", "MoveTo", level)
     }, [level]);
 
@@ -24,6 +23,7 @@ export default function OceanView(props) {
             isBg={true}
             height={height}
             width={width}
+            onLoaded={onLoaded}
         />
     );
 }

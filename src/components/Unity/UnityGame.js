@@ -22,16 +22,17 @@ const Loader = styled(LinearProgress)`
 `
 
 export default function UnityGame(props) {
-    const { context, height, width, isBg } = props;
+    const { context, height, width, isBg, onLoaded } = props;
     const [progress, setProgress] = useState(50);
     const [loaded, setLoaded] = useState(false);
 
     context.on("loaded", () => {
-        setLoaded(true);
+        setLoaded(true)
+        if (onLoaded) onLoaded(true)
     });
 
     context.on("progress", (progress) => {
-        setProgress(progress);
+        setProgress(progress)
     });
 
     return (

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react"
-import { Scrollbars } from "react-custom-scrollbars-2"
-import { useQueryParams, setPath } from "hookrouter"
+import { usePath } from 'hookrouter';
 // Styling
-import styled, { keyframes } from "styled-components"
-import IconButton from '@material-ui/core/IconButton'
+import styled from "styled-components"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
-import WebIcon from '@material-ui/icons/Web'
 
 import OceanView from "./Unity/OceanView"
+
+import Games from "./Sections/Games"
+import Web from "./Sections/Web"
+import About from "./Sections/About"
 
 // Common 
 const Button = styled.button`
@@ -98,22 +98,32 @@ function Navigate(props) {
 }
 
 export default function Home(props) {
-    const { scrollActions } = props
-    const [show, setShow] = useState(true)
+    const { startLevel, setShowHeader } = props
+    const [gameLoaded, setGameLoaded] = useState(false)
+    const [show, setShow] = useState(false)
     const [level, setLevel] = useState(0)
     const [gameLevel, setGameLevel] = useState(0)
-    const [queryParams, setQueryParams] = useQueryParams()
 
-    const {
-        l = ''
-    } = queryParams
+    const path = usePath()
+    const levelOrder = ['/', '/games', '/web', '/about']
 
     useEffect(() => {
-        MoveToLevel(Number(l))
-        setQueryParams({ l: '' })
-    }, [l])
+        if (!gameLoaded) return;
+        // Change this to use unity event later
+        setTimeout(() => {
+            const index = levelOrder.indexOf(startLevel)
+            MoveToLevel(index)
+        }, 3000)
+    }, [gameLoaded])
+
+    useEffect(() => {
+        if (!gameLoaded) return;
+        const index = levelOrder.indexOf(path)
+        MoveToLevel(index)
+    }, [path])
 
     function MoveToLevel(nextLevel) {
+        window.history.replaceState(null, "", levelOrder[nextLevel])
         setShow(false)
         setGameLevel(nextLevel)
         setTimeout(() => {
@@ -135,52 +145,32 @@ export default function Home(props) {
     }
 
     const Levels = () => {
-        if (level === 0) {
+        if (levelOrder[level] === '/') {
             return <Canvas show={show}>
                 <ContentSection></ContentSection>
                 <Navigate onNext={Descend} />
             </Canvas>
         }
-        if (level === 1) {
+        if (levelOrder[level] === '/games') {
             return <Canvas show={show}>
                 <ContentSection>
-                    <Buttons>
-                        <Button>
-                            <Text>Game Development</Text>
-                            <SportsEsportsIcon fontSize="large" />
-                        </Button>
-                        <Button>
-                            <Text>Web Development</Text>
-                            <WebIcon fontSize="large" />
-                        </Button>
-                    </Buttons>
+                    <Games />
                 </ContentSection>
                 <Navigate onBack={Ascend} onNext={Descend} />
             </Canvas>
         }
-        if (level === 2) {
+        if (levelOrder[level] === '/web') {
             return <Canvas show={show}>
                 <ContentSection>
-                    <Container>
-                        <h1>Game Development</h1>
-                    </Container>
+                    <Web />
                 </ContentSection>
                 <Navigate onBack={Ascend} onNext={Descend} />
             </Canvas>
         }
-        if (level === 3) {
+        if (levelOrder[level] === '/about') {
             return <Canvas show={show}>
                 <ContentSection>
-                    <Container>
-                        <p>I'm a man of simple taste. I like things such as movies, games and...gasoline.</p>
-                        <p>I believe when you create something, you are leaving behind an essence of your soul. I want to keep doing that
-                            for as long as I can until maybe someday, all parts of my soul exist somewhere in the form of one of my creations.
-                            Then, when I inevitably lose my body to time, I still exist through the pieces of my legacy that I have
-                            left behind. That is when I have achieved true immortality...
-                        </p>
-                        <p>Hence, this website serves as a vessel for some of my creations. I love playing games and especially love making
-                            them, so feel free to check them out and maybe even leave me your thoughts on them.</p>
-                    </Container>
+                    <About setShowHeader={setShowHeader} />
                 </ContentSection>
                 <Navigate onBack={Ascend} />
             </Canvas>
@@ -195,14 +185,9 @@ export default function Home(props) {
                 height="100vh"
                 width="100vw"
                 level={gameLevel}
+                onLoaded={setGameLoaded}
             />
-
-            <Scrollbars
-                style={{ width: '100vw', height: '100vh' }}
-                onScrollFrame={(data) => scrollActions(data)}
-            >
-                {Levels()}
-            </Scrollbars>
+            {Levels()}
         </>
     )
 }

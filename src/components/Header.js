@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { A, usePath, useQueryParams } from "hookrouter"
+import { A } from "hookrouter"
 // Styling
 import AppBar from '@material-ui/core/AppBar'
 import Slide from '@material-ui/core/Slide'
@@ -45,15 +45,18 @@ const SLink = styled(A)`
 const SLogo = styled.div`
     font-size: 3rem;
     color: black;
-    // font-family: 'Indie Flower', cursive;
 `
 const SLinkText = styled.div`
     font-size: 1em;
     color: black;
-    // font-family: 'Indie Flower', cursive;
-    padding: 0 1em;
-    margin: 0 15px;
+    // padding: 0 1em;
+    // margin: 0 15px;
+
+    :hover {
+        font-weight: bold;
+    }
 `
+
 
 const HideOnScroll = (props) => {
     const { children, show } = props
@@ -66,29 +69,29 @@ const HideOnScroll = (props) => {
 }
 
 const Header = (props) => {
-    const path = usePath()
-    const [queryParams, setQueryParams] = useQueryParams()
-
-    const {
-        l = ''
-    } = queryParams
-
     return <HideOnScroll {...props}>
         <SAppBar>
             <Left>
-                <SLink href="/" onClick={(path == '/') ? () => setQueryParams({ l: 0 }) : ''}>
+                <SLink href="/">
                     <SButton >
                         <SLogo><strong>RF</strong></SLogo>
                     </SButton>
                 </SLink>
             </Left>
             <Right>
-                <SLink href="/games">
+                {/* <SLink href="/games">
                     <SLinkText>Games</SLinkText>
+                </SLink>
+                <SLink href="/web">
+                    <SLinkText>Web</SLinkText>
+                </SLink>
+                <SLink href="/about">
+                    <SLinkText>About</SLinkText>
                 </SLink>
                 <SLink href="/contact">
                     <SLinkText>Contact</SLinkText>
-                </SLink>
+                </SLink> */}
+                <SLinkText>ryfprivate@gmail.com</SLinkText>
             </Right>
         </SAppBar>
     </HideOnScroll>
