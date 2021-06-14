@@ -14,12 +14,14 @@ export default function OceanView(props) {
     const { height, width, level } = props
 
     useEffect(() => {
-        unityContext.send("Main", "Toggle");
+        console.log("move to level " + level)
+        unityContext.send("Levels", "MoveTo", level)
     }, [level]);
 
     return (
         <UnityGame
             context={unityContext}
+            isBg={true}
             height={height}
             width={width}
         />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { A } from "hookrouter"
+import { A, usePath, useQueryParams } from "hookrouter"
 // Styling
 import AppBar from '@material-ui/core/AppBar'
 import Slide from '@material-ui/core/Slide'
@@ -51,10 +51,11 @@ const SLinkText = styled.div`
     color: black;
     font-family: 'Indie Flower', cursive;
     padding: 0 1em;
+    margin: 0 15px;
 `
 
 const HideOnScroll = (props) => {
-    const { children, show } = props;
+    const { children, show } = props
 
     return (
         <Slide appear={false} direction="down" in={!show}>
@@ -64,12 +65,19 @@ const HideOnScroll = (props) => {
 }
 
 const Header = (props) => {
+    const path = usePath()
+    const [queryParams, setQueryParams] = useQueryParams()
+
+    const {
+        l = ''
+    } = queryParams
+
     return <HideOnScroll {...props}>
         <SAppBar>
             <Left>
-                <SLink href="/">
+                <SLink href="/" onClick={(path == '/') ? () => setQueryParams({ l: 0 }) : ''}>
                     <SButton >
-                        <SLogo>RF</SLogo>
+                        <SLogo><strong>RF</strong></SLogo>
                     </SButton>
                 </SLink>
             </Left>

@@ -13,9 +13,9 @@ import './App.css';
 
 const routes = {
   '/': () => (scrollActions) => <Home scrollActions={scrollActions} />,
-  '/games': () => <Games />,
-  '/disco-cruiser': () => <DiscoCruiser />,
-  '/disco-cruiser-2': () => <Test />
+  '/games': () => (scrollActions) => <Games />,
+  '/disco-cruiser': () => (scrollActions) => <DiscoCruiser />,
+  '/disco-cruiser-2': () => (scrollActions) => <Test />
 }
 
 function App() {

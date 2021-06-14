@@ -8,13 +8,6 @@ import MediaCard from "./Cards/MediaCard"
 
 import img_discoCruiser from "../images/disco-cruiser/front_screenshot.png"
 
-const unityContext = new UnityContext({
-    loaderUrl: "Build/Environment.loader.js",
-    dataUrl: "Build/Environment.data",
-    frameworkUrl: "Build/Environment.framework.js",
-    codeUrl: "Build/Environment.wasm",
-});
-
 const Content = styled.div`
     position: fixed;
     top: 10%;
@@ -23,10 +16,6 @@ const Content = styled.div`
 
 export default function Games() {
     return <>
-        <UnityGame
-            context={unityContext}
-            height="100vh"
-            width="100vw" />
         <Content>
             <MediaCard bgImg={img_discoCruiser} handleClick={() => { window.location.href = "/disco-cruiser" }}>
                 <h2>Disco Cruiser</h2>
