@@ -1,14 +1,13 @@
 import React from "react"
 import Gallery from 'react-grid-gallery'
 import styled from "styled-components"
-import WebIcon from '@material-ui/icons/Web'
+import ColorLensIcon from '@material-ui/icons/ColorLens'
 
 import Section from "./Section"
 
 import MediaCard from "../Cards/MediaCard"
 
 import bitspace from "../../images/web/bitspace.png"
-import fairvine from "../../images/web/fairvine.png"
 const IMAGES =
     [
         {
@@ -42,14 +41,16 @@ const IMAGES =
     ]
 
 const Container = styled.div`
+    margin-top: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
 `
 const Title = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    font-size: 1.5em;
 `
 const Cards = styled.div`
     width: 60%;
@@ -57,52 +58,19 @@ const Cards = styled.div`
     flex-direction: row;
     justify-content: space-around;
 `
-const Button = styled.button`
-    font-family: 'Indie Flower', cursive;
-    font-size: 2em;
-    border: none;
-    color: white;
 
-    background: transparent;
-    transition: background 1s;
-
-    font-weight: normal;
-    
-    :hover {
-        font-weight: bold;
-        // background: rgba(0,0,0,0.1);
-        cursor: pointer;
-    }
-`
-
-export default function Web(props) {
+export default function Skills(props) {
     const { setShowHeader } = props
 
     return (
         <Section setShowHeader={setShowHeader}>
             <Container>
+                <h1></h1>
                 <Title>
-                    <WebIcon style={{ marginRight: '15px' }} fontSize="large" />
-                    <h1>Web</h1>
+                    <div>I am a game developer with a full stack web development past.</div>
+                    <div>I specialise in creating interactive interfaces with slick and expressive 'feel' and 'juice'</div>
                 </Title>
-                {/* <Cards>
-                    <MediaCard bgImg={img_discoCruiser} handleClick={() => { window.location.href = "/disco-cruiser" }}>
-                        <h2>Disco Cruiser</h2>
-                        <p>Cruise through the highways, and listen to some beats...while a massive tsunami chases you.</p>
-                    </MediaCard>
-                </Cards> */}
-                <Button onClick={() => { window.location.href = "https://www.fairvine.com.au/" }}>
-                    <img style={{ width: '800px' }} src={fairvine}></img>
-                </Button>
-                <Button onClick={() => { window.location.href = "https://bs-frontend.herokuapp.com/" }}>
-                    <img style={{ width: '800px' }} src={bitspace}></img>
-                </Button>
             </Container>
-            {/* <Gallery
-                images={IMAGES}
-                tagStyle={{ color: 'white' }}
-                enableImageSelection={false}
-            /> */}
         </Section>
     )
 }

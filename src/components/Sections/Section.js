@@ -4,9 +4,9 @@ import { Scrollbars } from "react-custom-scrollbars-2"
 
 const Content = styled.div`
     position: fixed;
-    top: 20%;
+    top: 10%;
     width: 80vw;
-    height: 80vh;
+    height: 70vh;
 `
 
 export default function Section(props) {
@@ -15,6 +15,8 @@ export default function Section(props) {
         <Content>
             <Scrollbars
                 onScrollFrame={(data) => {
+                    if (!setShowHeader) return
+
                     if (data.scrollTop > 50) {
                         setShowHeader(true)
                     } else {

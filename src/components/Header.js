@@ -11,6 +11,8 @@ import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 import styled from "styled-components"
 
+import itch from "../images/itch.png"
+
 const SAppBar = styled(AppBar)`
     && {
         display: flex;
@@ -144,10 +146,10 @@ const Header = (props) => {
                     <ContactContent>
                         <ContactText>ryfprivate@gmail.com</ContactText>
                         <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-                            <SButton>
+                            <SButton onClick={() => { window.location.href = "https://github.com/ryfprivate/" }}>
                                 <GitHubIcon style={{ color: 'black' }} fontSize="large" />
                             </SButton>
-                            <SButton>
+                            <SButton onClick={() => { window.location.href = "https://www.linkedin.com/in/ray-yuetong-feng/" }}>
                                 <LinkedInIcon style={{ color: 'black' }} fontSize="large" />
                             </SButton>
                         </ButtonGroup>

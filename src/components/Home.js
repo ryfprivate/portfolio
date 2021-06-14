@@ -6,7 +6,9 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 
 import OceanView from "./Unity/OceanView"
 
+import Skills from "./Sections/Skills"
 import Games from "./Sections/Games"
+import Experience from "./Sections/Experience"
 import Web from "./Sections/Web"
 import About from "./Sections/About"
 
@@ -24,8 +26,8 @@ const Button = styled.button`
     font-weight: normal;
     
     :hover {
-        // font-weight: bold;
-        background: rgba(0,0,0,0.1);
+        font-weight: bold;
+        // background: rgba(0,0,0,0.1);
         cursor: pointer;
     }
 `
@@ -59,15 +61,6 @@ const ContentSection = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`
-const Container = styled.div`
-    width: 60%;
-`
-const Buttons = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 60vw;
 `
 const BottomSection = styled.div`
     width: 100vw;
@@ -103,7 +96,7 @@ export default function Home(props) {
     const [level, setLevel] = useState(0)
     const [gameLevel, setGameLevel] = useState(0)
 
-    const levelOrder = ['/', '/games', '/web', '/about']
+    const levelOrder = ['/', '/skills', '/games', '/web', '/about']
 
     useEffect(() => {
         if (!gameLoaded) return;
@@ -140,6 +133,14 @@ export default function Home(props) {
             return <Canvas show={show}>
                 <ContentSection></ContentSection>
                 <Navigate onNext={Descend} />
+            </Canvas>
+        }
+        if (levelOrder[level] === '/skills') {
+            return <Canvas show={show}>
+                <ContentSection>
+                    <Skills />
+                </ContentSection>
+                <Navigate onBack={Ascend} onNext={Descend} />
             </Canvas>
         }
         if (levelOrder[level] === '/games') {
