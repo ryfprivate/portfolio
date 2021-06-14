@@ -4,6 +4,7 @@ import { Scrollbars } from "react-custom-scrollbars-2"
 
 const Content = styled.div`
     position: fixed;
+    top: 20%;
     width: 80vw;
     height: 80vh;
 `
