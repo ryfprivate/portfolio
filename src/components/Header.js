@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { A } from "hookrouter"
+import { A, usePath } from "hookrouter"
 // Styling
 import AppBar from '@material-ui/core/AppBar'
 import Slide from '@material-ui/core/Slide'
@@ -72,7 +72,7 @@ const Header = (props) => {
     return <HideOnScroll {...props}>
         <SAppBar>
             <Left>
-                <SLink href="/">
+                <SLink href="/" onClick={() => alert("hi")}>
                     <SButton >
                         <SLogo><strong>RF</strong></SLogo>
                     </SButton>

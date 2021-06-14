@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { usePath } from 'hookrouter';
 // Styling
 import styled from "styled-components"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -104,7 +103,6 @@ export default function Home(props) {
     const [level, setLevel] = useState(0)
     const [gameLevel, setGameLevel] = useState(0)
 
-    const path = usePath()
     const levelOrder = ['/', '/games', '/web', '/about']
 
     useEffect(() => {
@@ -116,14 +114,7 @@ export default function Home(props) {
         }, 3000)
     }, [gameLoaded])
 
-    useEffect(() => {
-        if (!gameLoaded) return;
-        const index = levelOrder.indexOf(path)
-        MoveToLevel(index)
-    }, [path])
-
     function MoveToLevel(nextLevel) {
-        window.history.replaceState(null, "", levelOrder[nextLevel])
         setShow(false)
         setGameLevel(nextLevel)
         setTimeout(() => {

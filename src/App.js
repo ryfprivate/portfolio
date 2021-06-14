@@ -7,12 +7,12 @@ import Home from "./components/Home"
 
 // Unity games
 import GamePage from "./components/GamePage"
-import DiscoCruiser from "./components/Unity/DiscoCruiser"
+import DiscoCruiser from "./components/Unity/DiscoCruiser/DiscoCruiser"
 
 import './App.css';
 
 const routes = {
-  '/disco-cruiser': (setShowHeader) => <GamePage />,
+  '/disco-cruiser': () => (setShowHeader) => <GamePage name='disco-cruiser' />,
   '/': () => (setShowHeader) => <Home startLevel='/' setShowHeader={setShowHeader} />,
   '/:level': ({ level }) => (setShowHeader) => <Home startLevel={`/${level}`} setShowHeader={setShowHeader} />,
 }

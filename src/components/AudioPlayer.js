@@ -49,7 +49,8 @@ const useStyles = makeStyles({
     }
 })
 
-export default function AudioPlayer({ setSamples }) {
+export default function AudioPlayer(props) {
+    const { setSamples, start } = props
     const classes = useStyles();
     const fft = 256;
     const [volume, setVolume] = useState(5);
@@ -153,6 +154,16 @@ export default function AudioPlayer({ setSamples }) {
     );
 
     // Effects
+    useEffect(() => {
+        if (!start) return;
+        setIsPlaying(true);
+
+        if (!started) {
+            setStarted(true);
+            initializeAudioAnalyser();
+        }
+    }, [start])
+
     useEffect(() => {
         requestAnimationFrame(runSpectrum);
     },
