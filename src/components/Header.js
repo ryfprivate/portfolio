@@ -34,6 +34,7 @@ const Right = styled.div`
 const SButton = styled(IconButton)`
     && {    
         padding: 0;
+        font-family: 'Indie Flower', cursive
     }
 `
 const SLink = styled(A)`
@@ -44,12 +45,12 @@ const SLink = styled(A)`
 const SLogo = styled.div`
     font-size: 3rem;
     color: black;
-    font-family: 'Indie Flower', cursive;
+    // font-family: 'Indie Flower', cursive;
 `
 const SLinkText = styled.div`
     font-size: 1em;
     color: black;
-    font-family: 'Indie Flower', cursive;
+    // font-family: 'Indie Flower', cursive;
     padding: 0 1em;
     margin: 0 15px;
 `

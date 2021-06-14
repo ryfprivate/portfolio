@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Scrollbars } from "react-custom-scrollbars-2"
-import { useQueryParams } from "hookrouter"
+import { useQueryParams, setPath } from "hookrouter"
 // Styling
 import styled, { keyframes } from "styled-components"
 import IconButton from '@material-ui/core/IconButton'
@@ -8,7 +8,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports'
 import WebIcon from '@material-ui/icons/Web'
-import Fade from '@material-ui/core/Fade'
 
 import OceanView from "./Unity/OceanView"
 
@@ -160,6 +159,16 @@ export default function Home(props) {
             </Canvas>
         }
         if (level === 2) {
+            return <Canvas show={show}>
+                <ContentSection>
+                    <Container>
+                        <h1>Game Development</h1>
+                    </Container>
+                </ContentSection>
+                <Navigate onBack={Ascend} onNext={Descend} />
+            </Canvas>
+        }
+        if (level === 3) {
             return <Canvas show={show}>
                 <ContentSection>
                     <Container>
